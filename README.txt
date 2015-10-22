@@ -1,12 +1,4 @@
-Versão do Cinnamon : 2.6.13
-Versão do Cinnamon Control Center : 2.6.0
-Versão do Cinnamon Desktop : 2.6.5
-Versão do Cinnamon Menus : 2.6.0
-Versão do Cinnamon Screensaver : 2.6.4
-Versão do Cinnamon Session : 2.6.3
-Versão do Cinnamon Settings Daemon : 2.6.3
-Versão do Cinnamon Themes : 2015.06.14
-Versão do Cinnamon Translations : 2.6.3
+Versão do Cinnamon : 2.8
 
 Esse pacote contem todos os últimos códigos fontes do site oficial:
 
