@@ -1,0 +1,17 @@
+# /etc/NetworkManager/NetworkManager.conf
+#
+# See NetworkManager.conf(5) for more information on this file
+
+[main]
+plugins=keyfile
+# Choose a DHCP client below.  Upstream recommends dhclient, but results may vary.
+# dhcpcd is the DHCP client usually used by Slackware:
+dhcp=dhcpcd
+# dhclient is the ISC reference DHCP client, part of the dhcp package:
+#dhcp=dhclient
+# This is a simple DHCP client that is built into NetworkManager:
+#dhcp=internal
+
+[keyfile]
+hostname=yourhostname
+
