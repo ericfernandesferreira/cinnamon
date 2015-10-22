@@ -5,6 +5,10 @@ Esse pacote contem todos os últimos códigos fontes do site oficial:
 https://github.com/linuxmint
 http://ftp.gnome.org/pub/GNOME/sources/
 
+Essa minha versão do Cinnamon é baseada na versão do Willysr
+https://github.com/willysr/csb
+***Todos os créditos vão para ele.
+
 Inclue também aplicativos para deixar um Desktop completo
 - Eye of Gnome
 - File Roller
@@ -38,6 +42,10 @@ This package contains all the latest source code from the official site:
 
 https://github.com/linuxmint
 http://ftp.gnome.org/pub/GNOME/sources/
+
+My Cinnamon version is based on version of Willysr
+https://github.com/willysr/csb
+*** All credits go to him.
 
 Also includes applications to make a complete Desktop
 - Eye of Gnome
