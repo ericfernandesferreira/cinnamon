@@ -25,7 +25,7 @@ Conteúdo:
 Como instalar:
 - você precisa baixar o .zip ou clonar o git e então executar o script
 sh build-cinnamon.sh
- 
+
 ------------------------------------------------------------------------------
 
 Cinnamon Version : 2.8
@@ -46,10 +46,10 @@ Contents:
 - eye of gnome
 - file roller
 - gedit
+- gnome terminal
 - gnome calculator
 - gnome screenshot
 - gnome system monitor
-- gnome terminal
 
 How to install:
 - you need to download the .zip or clone git and then run the script
