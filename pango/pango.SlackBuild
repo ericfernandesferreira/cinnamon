@@ -74,6 +74,10 @@ find . \
   \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
   -exec chmod 644 {} \;
 
+# Autoconf changes linux to linux-gnu.
+# Our host is $ARCH-slackware-linux not $ARCH-slackware-linux-gnu:
+sed -i -e 's#linux|linux-gnu|#linux|linux|#' config.sub
+
 CFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
@@ -87,7 +91,24 @@ CFLAGS="$SLKCFLAGS" \
   --target=$ARCH-slackware-linux
 
 make -j5
+
+# Check the host value that is passed to the compile to the one in this script:
+host="$ARCH-slackware-linux"
+compile_host=$(grep 'host_triplet =' pango/Makefile | sed "s/.* = //")
+if [ "x$compile_host" != "x$host" ]; then
+  echo "Host mismatch: compile='$compile_host', SlackBuild='$host'" && exit 1
+fi
+
 make install DESTDIR=$PKG
+
+# Install wrapper for pango-querymodules:
+cp $CWD/update-pango-querymodules $PKG/usr/bin/update-pango-querymodules
+chmod 0755 $PKG/usr/bin/update-pango-querymodules
+
+# Do not remove pangox.aliases
+rm -f $PKG/etc/pango/pango.modules
+mkdir -p $PKG/etc/pango/$host
+touch $PKG/etc/pango/$host/pango.modules
 
 mkdir -p $PKG/install
 cat <<EOF > $PKG/install/doinst.sh
