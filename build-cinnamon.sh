@@ -85,12 +85,12 @@ for dir in \
   caribou \
   pexpect \
   BeautifulSoup \
+  lxml \
   metacity \
   pam \
   pam_unix2 \
   python-pam \
   accountsservice \
-  alacarte \
   cinnamon \
   polib \
   file-roller \
