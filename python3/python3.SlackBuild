@@ -26,7 +26,7 @@
 
 PRGNAM=python3
 SRCNAM=Python
-VERSION=${VERSION:-3.5.0}
+VERSION=${VERSION:-3.4.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -38,7 +38,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://www.python.org/ftp/python/3.5.0/$SRCNAM-$VERSION.tar.xz
+wget -c https://www.python.org/ftp/python/3.4.3/$SRCNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -71,12 +71,21 @@ rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
 cd $SRCNAM-$VERSION
 
-# Patches from Arch
-patch -p1 -i $CWD/test_gdb-version-fix.patch
-patch -p1 -i $CWD/issue25150.patch
+patch -p1 -i $CWD/python3.readline.set_pre_input_hook.diff
+# We don't want a large libpython*.a:
+patch -p1 -i $CWD/python3.no-static-library.diff
+
+if [ "$ARCH" = "x86_64" ]; then
+  # Install to lib64 instead of lib:
+  patch -p1 -i $CWD/python3.x86_64.diff
+fi
 
 # Fix python3 path in cgi.py.
 sed -i '1s|^#.*/usr/local/bin/python|#!/usr/bin/python3|' Lib/cgi.py
+
+# If this system already has Python3 with pip in site-packages, ignore it and
+# install pip anyway.
+sed -i 's|\("install",\)|\1 "--ignore-installed",|' Lib/ensurepip/__init__.py
 
 # Fix the SO for --extension-suffix in python3-config.
 sed -i 's|@SO@|@EXT_SUFFIX@|' Misc/python-config.sh.in
@@ -95,7 +104,6 @@ find -L . \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --with-threads \
   --enable-ipv6 \
-  --enable-loadable-sqlite-extensions \
   --enable-shared \
   --with-system-expat \
   --with-system-ffi \
@@ -103,6 +111,10 @@ find -L . \
 
 make -j5
 make install DESTDIR=$PKG
+
+# Restore original ensurepip behaviour.
+sed -i 's|\("install",\) "--ignore-installed",|\1|' \
+  $PKG/usr/lib${LIBDIRSUFFIX}/python${PYVER}/ensurepip/__init__.py
 
 # Remove to avoid overwriting a copy from Python2.
 rm -f $PKG/usr/bin/2to3
