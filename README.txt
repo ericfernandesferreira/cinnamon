@@ -1,4 +1,4 @@
-Versão do Cinnamon : 2.8
+Versão do Cinnamon : 2.8.1
 Source do Cinnamon : github
 
 Essa minha versão do Cinnamon é baseada na versão do Willysr
@@ -20,6 +20,7 @@ Conteúdo:
 - gnome calculator
 - gnome screenshot
 - gnome system monitor
+- nemo extensions
 
 
 Como instalar:
@@ -28,7 +29,7 @@ sh build-cinnamon.sh
 
 ------------------------------------------------------------------------------
 
-Cinnamon Version : 2.8
+Cinnamon Version : 2.8.1
 Cinnamon Source : github
 
 This my version of Cinnamon is based on the version of Willysr
@@ -50,6 +51,7 @@ Contents:
 - gnome calculator
 - gnome screenshot
 - gnome system monitor
+- nemo extensions
 
 How to install:
 - you need to download the .zip or clone git and then run the script
