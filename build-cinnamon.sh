@@ -41,19 +41,13 @@ CSBROOT=$(pwd)
 # Loop for all packages
 for dir in \
   python3 \
-  libwnck \
+  libwnck3 \
   NetworkManager \
   network-manager-applet \
   libgusb \
   colord \
   exempi \
-  glib2 \
-  atk \
-  pango \
-  gtk+3 \
-  gsettings-desktop-schemas \
   dmz-cursor-theme \
-  gnome-themes-standard \
   ptyprocess \
   gnome-common \
   mozjs \
@@ -77,7 +71,6 @@ for dir in \
   clutter \
   clutter-gtk \
   muffin \
-  pygobject3 \
   glade \
   gtksourceview3 \
   vala \
@@ -101,7 +94,7 @@ for dir in \
   mint-x-icons \
   gnome-icon-theme \
   cinnamon-translations \
-  vte \
+  vte3 \
   gnome-terminal \
   libpeas \
   gedit \
