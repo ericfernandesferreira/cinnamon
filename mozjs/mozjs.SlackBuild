@@ -31,21 +31,21 @@ TAG=${TAG:-_csb}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
+    i?86) ARCH=i486 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
 fi
 
-wget -c https://ftp.mozilla.org/pub/mozilla.org/js/$PRGNAM-$VERSION.tar.bz2
+wget -c http://ftp.mozilla.org/pub/mozilla.org/js/$PRGNAM-$VERSION.tar.bz2
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+if [ "$ARCH" = "i486" ]; then
+  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
@@ -64,7 +64,6 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-# git clone https://github.com/Distrotech/mozjs.git
 tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION/js/src
 
@@ -85,9 +84,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man \
   --disable-tests \
   --disable-static \
-  --enable-shared \
   --enable-install-strip \
-  --with-buildstamp=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
 make -j5
