@@ -91,6 +91,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --disable-static \
   --disable-udev \
+  --disable-bash-completion \
   --disable-systemd-login \
   --disable-argyllcms-sensor \
   --with-daemon-user=colord \
