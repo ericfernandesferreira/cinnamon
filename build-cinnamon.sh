@@ -40,12 +40,9 @@ CSBROOT=$(pwd)
 
 # Loop for all packages
 for dir in \
-  python3 \
-  libwnck3 \
-  NetworkManager \
   network-manager-applet \
-  libgusb \
-  colord \
+  libwnck3 \
+  gtksourceview3 \
   exempi \
   dmz-cursor-theme \
   ptyprocess \
@@ -57,6 +54,8 @@ for dir in \
   pangox-compat \
   cinnamon-session \
   libgnomekbd \
+  libgusb \
+  colord \
   libgtop \
   libgksu \
   gksu \
@@ -66,18 +65,15 @@ for dir in \
   cinnamon-menus \
   cinnamon-control-center \
   zenity \
-  rarian \
   cogl \
   clutter \
   clutter-gtk \
   muffin \
-  glade \
-  gtksourceview3 \
   vala \
   libgee \
   caribou \
   pexpect \
-  BeautifulSoup \
+  beautifulsoup \
   lxml \
   metacity \
   pam \
@@ -100,12 +96,6 @@ for dir in \
   gedit \
   gnome-calculator \
   gnome-screenshot \
-  libsigc++ \
-  glibmm \
-  cairomm \
-  pangomm \
-  atkmm \
-  gtkmm3 \
   gnome-system-monitor \
   gnome-desktop \
   eog \
