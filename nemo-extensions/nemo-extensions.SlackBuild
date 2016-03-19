@@ -27,13 +27,13 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=nemo-extensions
-VERSION=${VERSION:-2.8.0}
+VERSION=${VERSION:-2.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i486 ;;
+    i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
@@ -48,8 +48,8 @@ ROLLER=$TMP/$PRGNAM/nemo-fileroller
 COMPARE=$TMP/$PRGNAM/nemo-compare
 TERMINAL=$TMP/$PRGNAM/nemo-terminal
 
-if [ "$ARCH" = "i486" ]; then
-  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
@@ -72,7 +72,6 @@ git clone https://github.com/linuxmint/nemo-extensions.git
 cd $PRGNAM
 git checkout
 cd $ROLLER
-
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -92,11 +91,10 @@ autoreconf -fi
   --disable-schemas-compile \
   --build=$ARCH-slackware-linux
 
-make -j5
+make
 make install DESTDIR=$PKG
 
 cd $PYTHON
-
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -115,11 +113,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-schemas-compile \
   --build=$ARCH-slackware-linux
 
-make -j5
+make
 make install DESTDIR=$PKG
 
 cd $COMPARE
-
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -137,7 +134,6 @@ ln -s /usr/share/nemo-compare/nemo-compare.py "$PKG/usr/share/nemo-python/extens
 ln -s /usr/share/nemo-compare/nemo-compare-preferences.py "$PKG/usr/bin/nemo-compare-preferences"
 
 cd $TERMINAL
-
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
