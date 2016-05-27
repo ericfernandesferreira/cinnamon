@@ -40,7 +40,7 @@ CSBROOT=$(pwd)
 
 # Loop for all packages
 for dir in \
-  network-manager-applet \
+  python3 \
   libwnck3 \
   gtksourceview3 \
   exempi \
