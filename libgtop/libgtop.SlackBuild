@@ -28,7 +28,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=libgtop
-VERSION=${VERSION:-2.32.0}
+VERSION=${VERSION:-2.34.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -40,7 +40,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://ftp.acc.umu.se/pub/GNOME/sources/libgtop/2.32/$PRGNAM-$VERSION.tar.xz
+wget -c http://ftp.acc.umu.se/pub/GNOME/sources/libgtop/2.34/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
