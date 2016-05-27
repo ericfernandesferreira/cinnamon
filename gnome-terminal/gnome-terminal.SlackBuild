@@ -88,7 +88,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static \
   --without-nautilus-extension \
   --disable-search-provider \
-  --disable-scrollkeeper \
   --disable-maintainer-mode \
   --build=$ARCH-slackware-linux \
 
