@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=cinnamon-themes
-VERSION=${VERSION:-2015.11.06}
+VERSION=${VERSION:-2016.05.03}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
