@@ -73,8 +73,11 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+mkdir -p build-py2 build-py3 devel
+
+cd build-py2
 CFLAGS="$SLKCFLAGS" \
-./configure \
+../configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --sysconfdir=/etc \
@@ -83,11 +86,10 @@ CFLAGS="$SLKCFLAGS" \
   --build=$ARCH-slackware-linux
 
 make
-make install DESTDIR=$PKG
-python2 -m compileall "$PKG/usr/lib${LIBDIRSUFFIX}/python2.7/site-packages/gi"
 
+cd ../build-py3
 CFLAGS="$SLKCFLAGS" \
-./configure \
+../configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --sysconfdir=/etc \
@@ -97,6 +99,18 @@ CFLAGS="$SLKCFLAGS" \
 
 make
 make install DESTDIR=$PKG
+rm -r $PKG/usr/{include,lib${LIBDIRSUFFIX}/pkgconfig}
+
+cd ../build-py2
+make install DESTDIR=$PKG
+mv $PKG/usr/{include,lib${LIBDIRSUFFIX}/pkgconfig} $TMP/$SRCNAM-$VERSION/devel
+python2 -m compileall $PKG/usr/lib${LIBDIRSUFFIX}/python2.7/site-packages/gi
+
+cd ../devel
+mkdir -p $PKG/usr/{include,lib${LIBDIRSUFFIX}}
+mv include $PKG/usr
+mv pkgconfig $PKG/usr/lib${LIBDIRSUFFIX}
+cd $TMP/$SRCNAM-$VERSION
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
