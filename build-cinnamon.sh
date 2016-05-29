@@ -42,13 +42,13 @@ CSBROOT=$(pwd)
 for dir in \
   python3 \
   py3cairo \
+  gnome-common \
   pygobject3 \
   libwnck3 \
   gtksourceview3 \
   exempi \
   dmz-cursor-theme \
   ptyprocess \
-  gnome-common \
   mozjs \
   cjs \
   cinnamon-desktop \
