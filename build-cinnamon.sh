@@ -41,6 +41,8 @@ CSBROOT=$(pwd)
 # Loop for all packages
 for dir in \
   python3 \
+  py3cairo \
+  pygobject3 \
   libwnck3 \
   gtksourceview3 \
   exempi \
