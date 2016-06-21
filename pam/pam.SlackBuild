@@ -89,7 +89,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --enable-read-both-confs \
   --disable-prelude \
-  --disable-db \
+  --disable-regenerate-docu \
   --disable-selinux \
   --build=$ARCH-slackware-linux
 
