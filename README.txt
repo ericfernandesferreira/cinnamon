@@ -9,7 +9,7 @@ Esse source foi construído principalmente para quem quiser usar a última vers�
 do Cinnamon
 
 Requerimentos:
-- slackware64 current
+- slackware64 14.2
 - pulseaudio
 
 Conteúdo:
@@ -40,7 +40,7 @@ This source was built primarily for those who want to use the latest Cinnamon
 version
 
 Requirements:
-- slackware64 current
+- slackware64 14.2
 - pulseaudio
 
 Contents:
