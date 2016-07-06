@@ -39,7 +39,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://ftp.acc.umu.se/pub/GNOME/sources/json-glib/1.2/$PRGNAM-$VERSION.tar.xz
+wget -c http://download.gnome.org/sources/json-glib/1.2/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
