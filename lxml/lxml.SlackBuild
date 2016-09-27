@@ -37,7 +37,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://pypi.python.org/packages/source/l/lxml/$PRGNAM-$VERSION.tar.gz
+wget -c https://github.com/lxml/lxml/archive/$PRGNAM-$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
