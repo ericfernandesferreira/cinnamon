@@ -36,7 +36,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://download.gnome.org/sources/libwnck/3.14/$SRCNAM-$VERSION.tar.xz
+wget -c http://download.gnome.org/sources/libwnck/3.20/$SRCNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
