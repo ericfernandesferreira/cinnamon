@@ -40,7 +40,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://www.crummy.com/software/BeautifulSoup/bs4/download/4.4/$SRCNAM-$VERSION.tar.gz
+wget -c http://www.crummy.com/software/BeautifulSoup/bs4/download/4.5/$SRCNAM-$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
