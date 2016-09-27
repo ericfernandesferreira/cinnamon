@@ -51,6 +51,9 @@ for dir in \
   ptyprocess \
   mozjs \
   cjs \
+  pam \
+  pam_unix2 \
+  python-pam \
   cinnamon-desktop \
   json-glib \
   pangox-compat \
@@ -78,9 +81,6 @@ for dir in \
   beautifulsoup \
   lxml \
   metacity \
-  pam \
-  pam_unix2 \
-  python-pam \
   accountsservice \
   cinnamon \
   polib \
