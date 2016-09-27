@@ -37,6 +37,8 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
+wget -c https://github.com/linuxmint/cjs/archive/$VERSION.tar.gz
+
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
 PKG=$TMP/package-$PRGNAM
@@ -61,10 +63,11 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM
-git clone https://github.com/linuxmint/cjs.git
-cd $PRGNAM
-git checkout
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$VERSION.tar.gz
+# git clone https://github.com/linuxmint/cjs.git
+cd $PRGNAM-$VERSION
+# git checkout
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
