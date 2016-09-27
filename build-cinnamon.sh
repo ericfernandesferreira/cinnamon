@@ -48,6 +48,7 @@ for dir in \
   gtksourceview3 \
   exempi \
   dmz-cursor-theme \
+  autoconf-archive \
   ptyprocess \
   mozjs \
   cjs \
