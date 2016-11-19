@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
      |-----handy-ruler------------------------------------------------------|
-gedit: gedit (GNOME Text Editor)
-gedit:
-gedit: gedit is the official text editor of the GNOME desktop environment.
-gedit: While aiming at simplicity and ease of use, gedit is a powerful
-gedit: general-purpose text editor.
-gedit:
-gedit:
-gedit:
-gedit: homepage: http://projects.gnome.org/gedit
-gedit:
-gedit:
+glade: glade (GTK+ User Interface Builder)
+glade:
+glade: Glade is a RAD tool to enable quick & easy development of user
+glade: interfaces for the Gtk+ toolkit and the GNOME desktop environment.
+glade: The user interfaces designed in Glade are stored in XML format,
+glade: enabling easy integration with external tools.
+glade:
+glade: This version of Glade (Glade-3) is a complete rewrite of the original
+glade: Glade codebase.
+glade:
+glade:

@@ -27,7 +27,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=nemo-extensions
-VERSION=${VERSION:-3.0.0}
+VERSION=${VERSION:-3.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -38,6 +38,8 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
+
+wget -c https://github.com/linuxmint/$PRGNAM/archive/$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -67,10 +69,11 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM
-git clone https://github.com/linuxmint/nemo-extensions.git
-cd $PRGNAM
-git checkout
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$VERSION.tar.gz
+# git clone https://github.com/linuxmint/nemo-extensions.git
+cd $PRGNAM-$VERSION
+# git checkout
 cd $ROLLER
 chown -R root:root .
 find -L . \

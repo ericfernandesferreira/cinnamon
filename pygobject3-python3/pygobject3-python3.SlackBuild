@@ -1,10 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for file-roller
+# Slackware build script for pygobject3-python3
 
-# Ryan P.C. McQuen | Everett, WA | ryan.q@linux.com
-
-# Copyright 2010  Binh Nguyen <binhvng@gmail.com>
+# Copyright 2016 Hunter Sezen California, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -13,7 +11,7 @@
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 #  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
 #  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -24,10 +22,13 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Modified by Willy Sudiarto Raharjo for CSB Project
+
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
-PRGNAM=file-roller
-VERSION=${VERSION:-3.22.2}
+PRGNAM=pygobject3-python3
+SRCNAM=pygobject
+VERSION=${VERSION:-3.20.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -39,7 +40,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://ftp.acc.umu.se/pub/GNOME/sources/file-roller/3.22/$PRGNAM-$VERSION.tar.xz
+wget -c http://ftp.gnome.org/pub/GNOME/sources/pygobject/3.20/$SRCNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -65,9 +66,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
-cd $PRGNAM-$VERSION
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -76,19 +77,10 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --infodir=/usr/info \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localedir=/usr/share/locale \
-  --enable-libarchive \
-  --disable-static \
-  --enable-shared \
+  --with-python=python3 \
   --build=$ARCH-slackware-linux
 
 make
@@ -97,14 +89,16 @@ make install DESTDIR=$PKG
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+# Conflicts with Slackware's pygobject3 package
+rm -rf $PKG/usr/include
+rm -rf $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING ChangeLog HACKING INSTALL MAINTAINERS NEWS README TODO \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING ChangeLog INSTALL NEWS PKG-INFO README $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-txz}

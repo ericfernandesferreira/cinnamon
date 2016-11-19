@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=python-pam
-VERSION=${VERSION:-1.8.2}
+VERSION=${VERSION:-0.1.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -37,7 +37,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://pypi.python.org/packages/de/8c/f8f5d38b4f26893af267ea0b39023d4951705ab0413a39e0cf7cf4900505/$PRGNAM-$VERSION.tar.gz
+wget -c https://pypi.python.org/packages/source/p/pam/pam-$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -63,9 +63,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf pam-$VERSION
+tar xvf $CWD/pam-$VERSION.tar.gz
+cd pam-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -73,23 +73,13 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-python2 setup.py install --root=$PKG
+python setup.py install --root=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 (
   cd $PKG/usr/lib${LIBDIRSUFFIX}/python2.7/site-packages/
-  ln -s pam.py PAM.py
-  ln -s pam.pyc PAM.pyc
-)
-
-if $(python3 -c 'import os' 2>/dev/null); then
-  python3 setup.py build install --root=$PKG
-fi
-
-(
-  cd $PKG/usr/lib${LIBDIRSUFFIX}/python3.5/site-packages/
   ln -s pam.py PAM.py
   ln -s pam.pyc PAM.pyc
 )

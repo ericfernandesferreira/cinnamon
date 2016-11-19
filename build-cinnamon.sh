@@ -43,12 +43,11 @@ for dir in \
   python3 \
   py3cairo \
   gnome-common \
-  pygobject3 \
+  pygobject3-python3 \
   libwnck3 \
   gtksourceview3 \
   exempi \
   dmz-cursor-theme \
-  autoconf-archive \
   ptyprocess \
   mozjs \
   cjs \
@@ -91,6 +90,7 @@ for dir in \
   cinnamon-screensaver \
   cinnamon-themes \
   mint-x-icons \
+  mint-y-icons \
   gnome-icon-theme \
   cinnamon-translations \
   vte3 \

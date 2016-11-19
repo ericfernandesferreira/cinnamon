@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for gtksourceview
-
-# Copyright 2012-2013  Willy Sudiarto Raharjo <willysr@slackware-id.org>
+# Slackware build script for mint-y icons
+# Written by Eric Fernandes Ferreira <candelabrus@gmail.com>
+# Copyright 2015 Eric Fernandes Ferreira, Ponta Grossa - PR, Brazil
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,9 +26,8 @@
 
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
-PRGNAM=gtksourceview3
-SRCNAM=gtksourceview
-VERSION=${VERSION:-3.18.4}
+PRGNAM=mint-y-icons
+VERSION=${VERSION:-1.0.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -39,8 +38,6 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
-
-wget -c http://ftp.acc.umu.se/pub/GNOME/sources/gtksourceview/3.18/$SRCNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -66,38 +63,17 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
-cd $SRCNAM-$VERSION
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+rm -rf $PRGNAM
+git clone https://github.com/linuxmint/mint-y-icons.git
+cd $PRGNAM
+git checkout
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --enable-glade-catalog \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --build=$ARCH-slackware-linux
-
-# At the end of build process, the uninstalled gtksourceview.pc is
-# used.  Let's make sure pkg-config can find it.
-PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$TMP/$PRGNAM-$VERSION make
-make install-strip DESTDIR=$PKG
-
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+mkdir -p $PKG/usr/share/icons
+rm -rf debian
+mv usr/share/icons/Mint-Y $PKG/usr/share/icons/
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING HACKING MAINTAINERS NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
+cp README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
