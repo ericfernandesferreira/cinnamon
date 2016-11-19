@@ -75,6 +75,7 @@ find -L . \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
+LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
