@@ -44,6 +44,7 @@ for dir in \
   py3cairo \
   gnome-common \
   pygobject3-python3 \
+  glade \
   libwnck3 \
   gtksourceview3 \
   exempi \
