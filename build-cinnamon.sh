@@ -42,19 +42,16 @@ CSBROOT=$(pwd)
 for dir in \
   python3 \
   py3cairo \
-  gnome-common \
   pygobject3-python3 \
+  ptyprocess \
+  gnome-common \
   glade \
   libwnck3 \
   gtksourceview3 \
   exempi \
   dmz-cursor-theme \
-  ptyprocess \
   mozjs \
   cjs \
-  pam \
-  pam_unix2 \
-  python-pam \
   cinnamon-desktop \
   json-glib \
   pangox-compat \
@@ -82,9 +79,13 @@ for dir in \
   beautifulsoup \
   lxml \
   metacity \
+  pam \
+  pam_unix2 \
+  python-pam \
   accountsservice \
   cinnamon \
   polib \
+  cinnamon-translations \
   file-roller \
   nemo \
   nemo-extensions \
@@ -93,7 +94,6 @@ for dir in \
   mint-x-icons \
   mint-y-icons \
   gnome-icon-theme \
-  cinnamon-translations \
   vte3 \
   gnome-terminal \
   libpeas \
