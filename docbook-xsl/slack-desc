@@ -1,0 +1,12 @@
+           |-----handy-ruler------------------------------------------------------|
+docbook-xsl: clutter-gtk (GTK Clutter Widget)
+docbook-xsl:
+docbook-xsl: Clutter-GTK is a library providing facilities to integrate Clutter
+docbook-xsl: into GTK+ applications and vice versa.
+docbook-xsl:
+docbook-xsl:
+docbook-xsl:
+docbook-xsl: Project URL: http://www.clutter-gtk-project.org/
+docbook-xsl:
+docbook-xsl:
+docbook-xsl:
