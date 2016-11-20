@@ -64,7 +64,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/VERSION.tar.gz
+tar xvf $CWD/$VERSION.tar.gz
 # git clone https://github.com/linuxmint/muffin.git
 cd $PRGNAM-$VERSION
 # git checkout
