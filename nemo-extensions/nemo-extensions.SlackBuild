@@ -45,10 +45,10 @@ CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
 PKG=$TMP/package-$PRGNAM-$VERSION
 OUTPUT=${OUTPUT:-/tmp}
-PYTHON=$TMP/$PRGNAM/nemo-python
-ROLLER=$TMP/$PRGNAM/nemo-fileroller
-COMPARE=$TMP/$PRGNAM/nemo-compare
-TERMINAL=$TMP/$PRGNAM/nemo-terminal
+PYTHON=$TMP/$PRGNAM-$VERSION/nemo-python
+ROLLER=$TMP/$PRGNAM-$VERSION/nemo-fileroller
+COMPARE=$TMP/$PRGNAM-$VERSION/nemo-compare
+TERMINAL=$TMP/$PRGNAM-$VERSION/nemo-terminal
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"

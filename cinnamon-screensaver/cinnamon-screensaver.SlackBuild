@@ -77,6 +77,7 @@ find -L . \
 
 # Removed webkit-dependent screensaver
 rm -rf "data/screensavers/webkit@cinnamon.org"
+patch -p1 < $CWD/remove-webkit.patch
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
