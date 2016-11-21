@@ -88,8 +88,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --build=$ARCH-slackware-linux
 
-# At the end of build process, the uninstalled gtksourceview.pc is
-# used.  Let's make sure pkg-config can find it.
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$TMP/$PRGNAM-$VERSION make
 make install-strip DESTDIR=$PKG
 
