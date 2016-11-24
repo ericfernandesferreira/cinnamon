@@ -40,10 +40,13 @@ CSBROOT=$(pwd)
 
 # Loop for all packages
 for dir in \
+  vala \
   python3 \
+  dbus-python3 \
   py3cairo \
   pygobject3-python3 \
   ptyprocess \
+  autoconf-archive \
   gnome-common \
   glade \
   libwnck3 \
@@ -52,11 +55,15 @@ for dir in \
   dmz-cursor-theme \
   mozjs \
   cjs \
+  cracklib \
+  pam \
+  python-pam \
   cinnamon-desktop \
   json-glib \
   pangox-compat \
   cinnamon-session \
   libgnomekbd \
+  xapps \
   libgusb \
   colord \
   libgtop \
@@ -72,18 +79,13 @@ for dir in \
   clutter \
   clutter-gtk \
   muffin \
-  vala \
   libgee \
   caribou \
   pexpect \
   beautifulsoup \
   lxml \
   metacity \
-  pam \
-  pam_unix2 \
-  python-pam \
   accountsservice \
-  cinnamon \
   polib \
   cinnamon-translations \
   file-roller \
@@ -93,6 +95,7 @@ for dir in \
   cinnamon-themes \
   mint-x-icons \
   mint-y-icons \
+  cinnamon \
   gnome-icon-theme \
   vte3 \
   gnome-terminal \
