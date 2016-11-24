@@ -93,6 +93,7 @@ for dir in \
   nemo-extensions \
   cinnamon-screensaver \
   cinnamon-themes \
+  mint-y-theme \
   mint-x-icons \
   mint-y-icons \
   cinnamon \
