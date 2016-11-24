@@ -26,7 +26,7 @@
 
 PRGNAM=cinnamon
 SRCNAM=Cinnamon
-VERSION=${VERSION:-3.0.7}
+VERSION=${VERSION:-3.2.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -79,6 +79,32 @@ find -L . \
 # Patch to fix default theme
 patch -p1 -i $CWD/default-theme.patch
 
+# Fix selected background color in Cinnamon Settings for Adwaita theme
+sed -i 's/@selected_bg_color;/@theme_selected_bg_color;/' \
+    files/usr/share/cinnamon/cinnamon-settings/cinnamon-settings.py
+
+# Fix missing icons with the Adwaita theme
+sed -i 's/"gtk-file"/"text-x-preview"/' docs/applets-examples/finder@cinnamon.org/applet.js  src/cinnamon-util.c
+sed -i "s/SECONDARY, 'ok'/SECONDARY, 'gtk-ok'/
+          s/SECONDARY, 'stop'/SECONDARY, 'process-stop'/" files/usr/share/cinnamon/cinnamon-desktop-editor/cinnamon-desktop-editor.py
+sed -i "s/'gnome-panel-launcher'/'system-run'/" files/usr/share/cinnamon/cinnamon-desktop-editor/cinnamon-desktop-editor.py
+sed -i 's/icon_name">gnome-panel-launcher/icon_name">system-run/' files/usr/share/cinnamon/cinnamon-desktop-editor/launcher-editor.ui
+sed -i 's/"reload"/"view-refresh"/' files/usr/share/cinnamon/cinnamon-settings-users/cinnamon-settings-users.py
+sed -i 's/"gtk-dialog-question"/"dialog-question"/
+          s/"gtk-directory"/"folder"/' files/usr/share/cinnamon/cinnamon-settings/modules/cs_default.py
+sed -i 's/"display"/"video-display"/
+          s/"access"/"preferences-desktop-accessibility"/
+          s/"gnome-panel-launcher"/"system-run"/' files/usr/share/cinnamon/cinnamon-settings/modules/cs_keyboard.py
+sed -i 's/"reload"/"view-refresh"/' files/usr/share/cinnamon/cinnamon-settings/modules/cs_user.py
+sed -i 's/"stock_calendar"/"x-office-calendar"/' files/usr/share/cinnamon/applets/calendar@cinnamon.org/metadata.json
+sed -i 's/"keyboard"/"input-keyboard"/' files/usr/share/cinnamon/applets/keyboard@cinnamon.org/metadata.json
+sed -i 's/"desktop"/"user-desktop"/' files/usr/share/cinnamon/applets/show-desktop@cinnamon.org/metadata.json
+sed -i 's/"stock_volume"/"audio-volume-high"/' files/usr/share/cinnamon/applets/sound@cinnamon.org/metadata.json
+sed -i 's/"stock_calendar"/"x-office-calendar"/' files/usr/share/cinnamon/desklets/clock@cinnamon.org/metadata.json
+
+# Remove broken symlink
+rm files/etc/xdg/menus/cinnamon-applications-merged
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./autogen.sh \
@@ -104,10 +130,18 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING README $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 find $PKG/usr/doc/$PRGNAM-$VERSION/ -type f -exec chmod 644 {} \;
 chown -R root:root $PKG/usr/doc/$PRGNAM-$VERSION
+
+# provide some background wallpapers
+mkdir -p $PKG/usr/share/backgrounds/cinnamon/desktop/ $PKG/usr/share/cinnamon-background-properties/
+cp $CWD/slackware-background-*.png $PKG/usr/share/backgrounds/cinnamon/desktop/
+cp $CWD/slackware.xml $PKG/usr/share/cinnamon-background-properties/
+
+# override schema to provide a default Slackware background wallpaper
+cp $CWD/slackware-14.2.gschema.override $PKG/usr/share/glib-2.0/schemas
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

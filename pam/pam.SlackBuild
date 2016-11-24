@@ -110,6 +110,9 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a AUTHORS COPYING* Copyright NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
 rm -f $PKG/usr/doc/$PRGNAM-$VERSION/index.html
 
+mkdir -p $PKG/etc
+cp -rf $CWD/pam.d $PKG/etc/
+
 # fix some missing symlinks from old pam for compatibility
 cd $PKG/usr/lib${LIBDIRSUFFIX}/security
 ln -s pam_unix.so pam_unix_acct.so

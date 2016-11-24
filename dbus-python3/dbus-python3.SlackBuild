@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for cinnamon-settings-daemon
+# Slackware build script for dbus-python3
 
-# Copyright 2014-2015 Willy Sudiarto Raharjo <willysr@slackware-id.org>
+# Copyright 2016 Hunter Sezen California, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,10 +22,13 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Modified by Willy Sudiarto Raharjo for CSB Project
+
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
-PRGNAM=cinnamon-settings-daemon
-VERSION=${VERSION:-3.2.0}
+PRGNAM=dbus-python3
+SRCNAM=$(echo $PRGNAM | tr -d 3)
+VERSION=${VERSION:-1.2.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -37,7 +40,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://github.com/linuxmint/$PRGNAM/archive/$VERSION.tar.gz
+wget -c https://dbus.freedesktop.org/releases/$SRCNAM/$SRCNAM-$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -58,16 +61,14 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e
+set -e 
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$VERSION.tar.gz
-# git clone https://github.com/linuxmint/cinnamon-settings-daemon.git
-cd $PRGNAM-$VERSION
-# git checkout
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -77,18 +78,13 @@ find -L . \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./autogen.sh \
+PYTHON=/usr/bin/python3 \
+./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --enable-static=no \
-  --enable-polkit \
-  --disable-schemas-compile \
-  --disable-cups \
-  --build=$ARCH-slackware-linux
+  --build=$ARCH-slackware-linux \
+  --host=$ARCH-slackware-linux
 
 make
 make install DESTDIR=$PKG
@@ -96,18 +92,16 @@ make install DESTDIR=$PKG
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+# Conflicts with Slackware's dbus-python package
+rm -rf $PKG/usr/include
+rm -rf $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING* ChangeLog MAINTAINERS NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING ChangeLog INSTALL NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-find $PKG/usr/doc/$PRGNAM-$VERSION/ -type f -exec chmod 644 {} \;
-chown -R root:root $PKG/usr/doc/$PRGNAM-$VERSION
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-txz}

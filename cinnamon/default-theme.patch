@@ -11,7 +11,7 @@ index 91fa171..9f56e4c 100644
          gettext-domain="@GETTEXT_PACKAGE@">
      <key name="name" type="s">
 -      <default>""</default>
-+      <default>"Cinnamon"</default>
++      <default>"cinnamon"</default>
        <_summary>Theme name</_summary>
        <_description>
         The name of the theme
