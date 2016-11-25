@@ -22,9 +22,10 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
+
 PRGNAM=mint-y-theme
 VERSION=${VERSION:-1.1.1}
-COMMITVER=${COMMITVER:-6900d3687793668d73a40112799b2d22cee78498}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -35,8 +36,6 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
-
-wget -c https://github.com/linuxmint/mint-y-theme/archive/$COMMITVER.zip
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -62,9 +61,10 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$COMMITVER
-unzip $CWD/$COMMITVER.zip
-cd $PRGNAM-$COMMITVER
+rm -rf $PRGNAM
+git clone https://github.com/linuxmint/mint-y-theme.git
+cd $PRGNAM
+git checkout
 
 mkdir -p $PKG/usr/share
 rm -rf debian
