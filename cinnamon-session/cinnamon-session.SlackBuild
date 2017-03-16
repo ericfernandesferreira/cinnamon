@@ -90,7 +90,7 @@ LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --disable-schemas-compile \
   --enable-gconf \
-  --disable-systemd \
+  --enable-qt57-theme-support \
   --build=$ARCH-slackware-linux
 
 make

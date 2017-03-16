@@ -28,7 +28,7 @@
 
 PRGNAM=python3
 SRCNAM=Python
-VERSION=${VERSION:-3.5.2}
+VERSION=${VERSION:-3.6.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -49,7 +49,7 @@ OUTPUT=${OUTPUT:-/tmp}
 
 # Don't set any SLKCFLAGS here, or OPT="$SLKCFLAGS" before the ./configure.
 # Python gets the compile options right without any help.
-if [ "$ARCH" = "i486" ]; then
+if [ "$ARCH" = "i586" ]; then
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   LIBDIRSUFFIX=""
@@ -76,8 +76,10 @@ tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
 cd $SRCNAM-$VERSION
 
 patch -p1 -i $CWD/patches/python3.readline.set_pre_input_hook.diff
+
 # We don't want a large libpython*.a.
 patch -p1 -i $CWD/patches/python3.no-static-library.diff
+patch -p1 -i $CWD/patches/python3.fix-comment-style.patch
 
 if [ "$ARCH" = "x86_64" ]; then
   # Install to lib64 instead of lib.
@@ -114,7 +116,7 @@ make
 make install DESTDIR=$PKG
 
 # Restore original ensurepip behaviour.
-sed -i 's|\("install",\) "--ignore-installed",|\1|' \
+sed -i 's| "--ignore-installed",||' \
   $PKG/usr/lib${LIBDIRSUFFIX}/python${PYVER}/ensurepip/__init__.py
 
 # Remove to avoid overwriting a copy from Python2.

@@ -113,6 +113,9 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a AUTHORS INSTALL NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
 chmod 0644 $PKG/usr/doc/$PRGNAM-$VERSION/*
 
+sh ./util/cracklib-format dicts/cracklib-small \
+    | sh ./util/cracklib-packer $PKG/usr/share/cracklib/pw_dict
+
 mkdir $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 

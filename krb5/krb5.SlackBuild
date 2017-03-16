@@ -35,7 +35,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=krb5
-VERSION=${VERSION:-1.14.4}
+VERSION=${VERSION:-1.15.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -47,7 +47,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://web.mit.edu/kerberos/dist/krb5/1.14/$PRGNAM-$VERSION.tar.gz
+wget -c http://web.mit.edu/kerberos/dist/krb5/1.15/$PRGNAM-$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
