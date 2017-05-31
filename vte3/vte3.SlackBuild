@@ -84,6 +84,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --disable-static \
   --disable-test-application \
+  --enable-glade-catalogue \
   --enable-introspection \
   --build=$ARCH-slackware-linux
 

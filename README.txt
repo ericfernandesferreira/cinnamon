@@ -1,4 +1,4 @@
-Versão do Cinnamon : 3.2.8
+Versão do Cinnamon : 3.4.1
 Source do Cinnamon : github
 
 Essa minha versão do Cinnamon é baseada na versão do Willysr
@@ -9,7 +9,7 @@ Esse source foi construído principalmente para quem quiser usar a última vers�
 do Cinnamon
 
 Requerimentos:
-- slackware64 14.2 / Current
+- slackware64 14.2
 - pulseaudio
 
 Conteúdo:
@@ -29,7 +29,7 @@ sh build-cinnamon.sh
 
 ------------------------------------------------------------------------------
 
-Cinnamon Version : 3.2.8
+Cinnamon Version : 3.4.1
 Cinnamon Source : github
 
 This my version of Cinnamon is based on the version of Willysr
@@ -40,7 +40,7 @@ This source was built primarily for those who want to use the latest Cinnamon
 version
 
 Requirements:
-- slackware64 14.2 / Current
+- slackware64 14.2
 - pulseaudio
 
 Contents:

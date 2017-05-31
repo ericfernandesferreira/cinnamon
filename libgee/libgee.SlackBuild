@@ -9,7 +9,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=libgee
-VERSION=${VERSION:-0.18.1}
+VERSION=${VERSION:-0.20.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -21,7 +21,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://ftp.acc.umu.se/pub/GNOME/sources/libgee/0.18/$PRGNAM-$VERSION.tar.xz
+wget -c http://ftp.acc.umu.se/pub/GNOME/sources/libgee/0.20/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
