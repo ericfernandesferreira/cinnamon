@@ -1,4 +1,4 @@
-Versão do Cinnamon : 3.4.5
+Versão do Cinnamon : 3.4.6
 Source do Cinnamon : github
 
 Essa minha versão do Cinnamon é baseada na versão do Willysr
@@ -28,7 +28,7 @@ sh build-cinnamon.sh
 
 ------------------------------------------------------------------------------
 
-Cinnamon Version : 3.4.5
+Cinnamon Version : 3.4.6
 Cinnamon Source : github
 
 This my version of Cinnamon is based on the version of Willysr
