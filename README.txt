@@ -2,7 +2,7 @@ Versão do Cinnamon : 6.2.x
 
 Requerimentos:
 - slackware64 15.0
-- pacote de audio - http://www.gitlab.com/grinder/audio.git
+- pacote de audio - http://www.github.com/ericfernandesferreira/audio.git
 
 Essa minha versão do Cinnamon é baseada na versão do Willysr
 https://github.com/willysr/csb
@@ -34,7 +34,7 @@ Cinnamon Version : 6.2.x
 
 Requirements:
 - slackware64 15.0
-- audio package - http://www.gitlab.com/grinder/audio.git
+- audio package - http://www.github.com/ericfernandesferreira/audio.git
 
 This my version of Cinnamon is based on the version of Willysr
 https://github.com/willysr/csb
