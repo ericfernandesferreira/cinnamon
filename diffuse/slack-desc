@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+       |-----handy-ruler------------------------------------------------------|
+diffuse: Diffuse is a graphical tool for merging and comparing text files.
+diffuse: Diffuse is able to compare an arbitrary number of files side-by-side
+diffuse: and gives users the ability to manually adjust line matching and directly
+diffuse: edit files. Diffuse can also retrieve revisions of files from Bazaar,
+diffuse: CVS, Darcs, Git, Mercurial, Monotone, RCS, Subversion, and SVK
+diffuse: repositories for comparison and merging.
+diffuse:
+diffuse:
+diffuse:
+diffuse: Homepage : https://github.com/MightyCreak/diffuse
+diffuse:

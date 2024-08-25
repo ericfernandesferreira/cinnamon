@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=gnome-terminal
-VERSION=${VERSION:-3.18.1}
+VERSION=${VERSION:-3.42.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -37,7 +37,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://ftp.acc.umu.se/pub/GNOME/sources/gnome-terminal/3.18/$PRGNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/gnome-terminal/3.42/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -73,32 +73,33 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-patch -p1 -i $CWD/0001-build-Don-t-treat-warnings-as-errors.patch
-patch -p1 -i $CWD/gnome-terminal-symbolic-new-tab-icon.patch
-patch -p1 -i $CWD/gnome-terminal-restore-dark-transparency.patch
+patch -Np1 -i $CWD/transparency.patch
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --localstatedir=/var \
-  --sysconfdir=/etc \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --disable-static \
-  --without-nautilus-extension \
-  --disable-search-provider \
-  --disable-maintainer-mode \
-  --build=$ARCH-slackware-linux \
+mkdir -p build
+cd build
+  meson setup \
+    --prefix=/usr \
+    --libdir=lib${LIBDIRSUFFIX} \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --buildtype=release \
+    -Ddocs=false \
+    -Dsearch_provider=false \
+    -Dnautilus_extension=false \
+    ..
 
-make
-make install DESTDIR=$PKG
+  meson configure
+  ninja
+  DESTDIR=$PKG ninja install
+cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+install -Dm644 $CWD/org.gnome.Terminal.gschema.override $PKG/usr/share/glib-2.0/schemas/org.gnome.Terminal.gschema.override
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS ChangeLog* COPYING HACKING NEWS $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING* ChangeLog* README* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
