@@ -54,7 +54,6 @@ for dir in \
   cjs \
   python-pam \
   cinnamon-desktop \
-  pangox-compat \
   libgnomekbd \
   libcroco \
   xapp \
