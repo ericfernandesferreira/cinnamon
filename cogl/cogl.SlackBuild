@@ -91,7 +91,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-gl \
   --enable-glx \
   --enable-sdl2 \
-  --enable-cogl-gst \
   --enable-gles{1,2} \
   --enable-cogl-gles2 \
   --enable-unit-tests \
