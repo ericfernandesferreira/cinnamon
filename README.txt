@@ -1,7 +1,7 @@
 Versão do Cinnamon : 6.2.x
 
 Requerimentos:
-- slackware64 15.0
+- slackware64 current
 - pacote de audio - http://www.github.com/ericfernandesferreira/audio.git
 
 Essa minha versão do Cinnamon é baseada na versão do Willysr
@@ -33,7 +33,7 @@ sh build-cinnamon.sh
 Cinnamon Version : 6.2.x
 
 Requirements:
-- slackware64 15.0
+- slackware64 current
 - audio package - http://www.github.com/ericfernandesferreira/audio.git
 
 This my version of Cinnamon is based on the version of Willysr
