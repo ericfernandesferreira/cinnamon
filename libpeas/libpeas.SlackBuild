@@ -81,8 +81,8 @@ cd build
     --localstatedir=/var \
     --buildtype=release \
     -Dvapi=true \
-    -Dlua51=false \
     -Ddemos=false \
+    -Dlua51=false \
     ..
 
   meson configure
