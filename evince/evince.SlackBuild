@@ -35,7 +35,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=evince
-VERSION=${VERSION:-40.5}
+VERSION=${VERSION:-46.3.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
@@ -47,7 +47,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://download.gnome.org/sources/evince/40/$PRGNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/evince/46/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -77,11 +77,6 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 mkdir -p build
 cd build
@@ -95,9 +90,8 @@ cd build
     -Dgtk_doc=false \
     -Dnautilus=false \
     -Duser_doc=false \
-    -Dbrowser_plugin=true \
     -Dsystemduserunitdir=no \
-    -Dthumbnail_cache=disabled \
+    -Dthumbnail_cache=enabled \
     ..
 
   meson configure
