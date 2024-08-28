@@ -38,16 +38,12 @@ TMP=${TMP:-/tmp}
 # This is the original directory where you started this script
 CSBROOT=$(pwd)
 
-pip install build installer flit_core
-
 # Loop for all packages
 for dir in \
-  meson \
   pytz \
   gnome-common \
   libtimezonemap \
   python3-libsass \
-  python3-webencodings \
   tinycss2 \
   setproctitle \
   ptyprocess \
@@ -63,8 +59,6 @@ for dir in \
   libcroco \
   xapp \
   cinnamon-session \
-  libgusb \
-  colord \
   gsound \
   cinnamon-settings-daemon \
   gnome-menus \
@@ -80,7 +74,6 @@ for dir in \
   metacity \
   polib \
   cinnamon-translations \
-  libhandy \
   file-roller \
   meld \
   diffuse \
@@ -91,7 +84,6 @@ for dir in \
   nemo-image-converter \
   nemo-compare \
   python3-xapp \
-  psutil \
   xdotool \
   cinnamon-screensaver \
   murrine \
@@ -104,7 +96,6 @@ for dir in \
   libpeas \
   gspell \
   gcab \
-  libstemmer \
   appstream-glib \
   uchardet \
   amtk \
