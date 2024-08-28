@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+       |-----handy-ruler------------------------------------------------------|
+xdotool: This tool lets you simulate keyboard input and mouse activity, move
+xdotool: and resize windows, etc. It does this using X11’s XTEST extension and
+xdotool: other Xlib functions.
+xdotool:
+xdotool: Additionally, you can search for windows and move, resize, hide, and
+xdotool: modify window properties like the title. If your window manager supports
+xdotool: it, you can use xdotool to switch desktops, move windows between
+xdotool: desktops, and change the number of desktops.
+xdotool:
+xdotool: Homepage : https://www.semicomplete.com/projects/xdotool
+xdotool:

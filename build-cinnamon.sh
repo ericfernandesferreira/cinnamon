@@ -38,41 +38,36 @@ TMP=${TMP:-/tmp}
 # This is the original directory where you started this script
 CSBROOT=$(pwd)
 
+pip install build installer flit_core
+
 # Loop for all packages
 for dir in \
-  vala \
-  python3 \
-  setproctitle \
-  dbus-python3 \
-  py3cairo \
-  pygobject3-python3 \
-  ptyprocess \
-  autoconf-archive \
+  meson \
+  pytz \
   gnome-common \
-  glade \
-  libwnck3 \
-  gtksourceview3 \
+  libtimezonemap \
+  python3-libsass \
+  python3-webencodings \
+  tinycss2 \
+  setproctitle \
+  ptyprocess \
+  gnome-desktop \
+  gtksourceview4 \
   exempi \
   dmz-cursor-theme \
-  mozjs \
   cjs \
-  cracklib \
-  pam \
   python-pam \
   cinnamon-desktop \
-  json-glib \
   pangox-compat \
-  cinnamon-session \
   libgnomekbd \
-  xapps \
+  libcroco \
+  xapp \
+  cinnamon-session \
   libgusb \
   colord \
-  libgtop \
-  libgksu \
-  gksu \
+  gsound \
   cinnamon-settings-daemon \
   gnome-menus \
-  krb5 \
   cinnamon-menus \
   cinnamon-control-center \
   zenity \
@@ -80,33 +75,48 @@ for dir in \
   clutter \
   clutter-gtk \
   muffin \
-  libgee \
   caribou \
   pexpect \
-  beautifulsoup \
-  lxml \
   metacity \
-  accountsservice \
   polib \
   cinnamon-translations \
+  libhandy \
   file-roller \
+  meld \
+  diffuse \
   nemo \
-  nemo-extensions \
+  nemo-python \
+  nemo-fileroller \
+  nemo-share \
+  nemo-image-converter \
+  nemo-compare \
+  python3-xapp \
+  psutil \
+  xdotool \
   cinnamon-screensaver \
+  murrine \
   cinnamon-themes \
-  mint-y-theme \
-  mint-x-icons \
   mint-y-icons \
+  mint-themes \
   cinnamon \
   gnome-icon-theme \
-  vte3 \
   gnome-terminal \
   libpeas \
+  gspell \
+  gcab \
+  libstemmer \
+  appstream-glib \
+  uchardet \
+  amtk \
+  tepl \
   gedit \
+  libgxps \
+  evince \
+  gthumb \
   gnome-calculator \
   gnome-screenshot \
   gnome-system-monitor \
-  gnome-desktop \
+  libportal \
   eog \
   ; do
   # Get the package name
@@ -132,7 +142,6 @@ for dir in \
       exit 1
     fi
   fi
-  # mv $PACKAGE /home/backup/app/slackware/cinnamon/install-gtk3
   # back to original directory
   cd $CSBROOT
 done

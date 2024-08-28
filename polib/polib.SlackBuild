@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=polib
-VERSION=${VERSION:-1.0.8}
+VERSION=${VERSION:-1.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -37,7 +37,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://pypi.python.org/packages/fb/64/ad3dbcc052d92fedd535a80b9866a9334afaf136cb5d89a673ac36d16b5a/$PRGNAM-$VERSION.tar.gz#md5=4e7c8a8e6851279ebb7c5813ca48d452
+wget -c https://files.pythonhosted.org/packages/10/9a/79b1067d27e38ddf84fe7da6ec516f1743f31f752c6122193e7bce38bdbf/$PRGNAM-$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -73,9 +73,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Python2
-python setup.py install --root=$PKG
-
 # Python3
 python3 setup.py install --root=$PKG
 
@@ -83,26 +80,11 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CHANGELOG LICENSE PKG-INFO README* docs/*.rst $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-
-# Don't fail if sphinx not installed
-if [ -x /usr/bin/sphinx-build ] ; then
-    (   cd $TMP/$PRGNAM-$VERSION/doc
-        make html
-        make pickle
-        make json
-        make htmlhelp
-        make qthelp
-        PAPER=letter make latex
-        mv ./_build/* $PKG/usr/doc/$PRGNAM-$VERSION/
-    )
-else
-    echo "Sphinx documenting program not found"
-    echo "Skipping document building"
-fi
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-txz}

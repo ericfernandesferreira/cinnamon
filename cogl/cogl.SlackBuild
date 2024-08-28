@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=cogl
-VERSION=${VERSION:-1.22.2}
+VERSION=${VERSION:-1.22.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -37,7 +37,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c http://download.gnome.org/sources/cogl/1.22/$PRGNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/cogl/1.22/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -73,9 +73,9 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Wayland
-# --enable-wayland-egl-platform \
-# --enable-wayland-egl-server \
+# To enable wayland
+#  --enable-wayland-egl-server \
+#  --enable-wayland-egl-platform \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -84,38 +84,36 @@ CXXFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --sysconfdir=/etc \
   --localstatedir=/var \
-  --mandir=/usr/man \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --disable-static \
   --disable-debug \
-  --disable-examples-install \
-  --disable-maintainer-flags \
-  --enable-introspection \
-  --enable-cairo \
-  --enable-deprecated \
-  --enable-gdk-pixbuf \
-  --enable-glib \
+  --disable-static \
   --enable-gl \
   --enable-glx \
+  --enable-sdl2 \
+  --enable-cogl-gst \
   --enable-gles{1,2} \
   --enable-cogl-gles2 \
-  --enable-xlib-egl-platform \
-  --enable-cogl-gst \
+  --enable-unit-tests \
+  --enable-introspection \
+  --disable-gtk-doc-html \
   --enable-kms-egl-platform \
-  --with-default-driver=opengl \
+  --enable-xlib-egl-platform \
+  --enable-wayland-egl-server \
+  --enable-wayland-egl-platform \
   --build=$ARCH-slackware-linux
 
 make
 make install DESTDIR=$PKG
 
+# Don't package .la files:
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/gstreamer-1.0/*.la
+
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a ABOUT-NLS COPYING ChangeLog NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a ABOUT-NLS COPYING ChangeLog NEWS README* doc/CODING* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-find $PKG/usr/doc/$PRGNAM-$VERSION/ -type f -exec chmod 644 {} \;
-chown -R root:root $PKG/usr/doc/$PRGNAM-$VERSION
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

@@ -1,5 +1,8 @@
-Versão do Cinnamon : 3.4.6
-Source do Cinnamon : github
+Versão do Cinnamon : 6.2.x
+
+Requerimentos:
+- slackware64 15.0
+- pacote de audio - http://www.github.com/ericfernandesferreira/audio.git
 
 Essa minha versão do Cinnamon é baseada na versão do Willysr
 https://github.com/willysr/csb
@@ -8,19 +11,18 @@ https://github.com/willysr/csb
 Esse source foi construído principalmente para quem quiser usar a última versão
 do Cinnamon
 
-Requerimentos:
-- slackware64 14.2
-
 Conteúdo:
+- evince
 - eye of gnome
 - file roller
+- meld
 - gedit
 - gnome terminal
 - gnome calculator
 - gnome screenshot
 - gnome system monitor
-- nemo extensions
-
+- gthumb
+- nemo extensions (fileroller,share,audio-tab,terminal,compare,python)
 
 Como instalar:
 - você precisa baixar o .zip ou clonar o git e então executar o script
@@ -28,8 +30,11 @@ sh build-cinnamon.sh
 
 ------------------------------------------------------------------------------
 
-Cinnamon Version : 3.4.6
-Cinnamon Source : github
+Cinnamon Version : 6.2.x
+
+Requirements:
+- slackware64 15.0
+- audio package - http://www.github.com/ericfernandesferreira/audio.git
 
 This my version of Cinnamon is based on the version of Willysr
 https://github.com/willysr/csb
@@ -38,18 +43,18 @@ https://github.com/willysr/csb
 This source was built primarily for those who want to use the latest Cinnamon
 version
 
-Requirements:
-- slackware64 14.2
-
 Contents:
+- evince
 - eye of gnome
 - file roller
+- meld
 - gedit
 - gnome terminal
 - gnome calculator
 - gnome screenshot
 - gnome system monitor
-- nemo extensions
+- gthumb
+- nemo extensions (fileroller,share,audio-tab,terminal,compare,python)
 
 How to install:
 - you need to download the .zip or clone git and then run the script

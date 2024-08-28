@@ -1,0 +1,8 @@
+[org.gnome.Terminal.Legacy.Settings]
+theme-variant='dark'
+
+[org.gnome.Terminal.Legacy.Profile]
+use-transparent-background=true
+background-transparency-percent=10
+
+
