@@ -78,6 +78,8 @@ find -L . \
 
 patch -p1 < $CWD/logo.patch
 
+#     -Dpy3modules_dir=lib${LIBDIRSUFFIX} \
+
 mkdir -p build
 cd build
   meson setup \
