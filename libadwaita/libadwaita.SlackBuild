@@ -1,9 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-# Slackware build script for murrine
+# Slackware build script for libadwaita
 
-# Written by crocket (crockabiscuit@gmail.com)
-# Copyright 2013 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2015-2024 Eric Fernandes Ferreira <candelabrus@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,12 +22,10 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
-
-PRGNAM=murrine
-VERSION=${VERSION:-0.98.2}
+PRGNAM=libadwaita
+VERSION=${VERSION:-1.5.3}
 BUILD=${BUILD:-1}
-TAG=${TAG:-_SBo}
+TAG=${TAG:-_csb}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -38,7 +35,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# wget -c https://gitlab.gnome.org/Archive/murrine/-/archive/MURRINE_0_90_3/murrine-MURRINE_0_90_3.tar.bz2
+wget -c https://gitlab.gnome.org/GNOME/$PRGNAM/-/archive/$VERSION/$PRGNAM-$VERSION.tar.bz2
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -64,11 +61,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM
-# tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
-git clone https://gitlab.gnome.org/Archive/murrine.git
-cd $PRGNAM
-git checkout
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
+cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -76,32 +71,32 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-autoreconf -vif
-intltoolize
+mkdir -p build
+cd build
+  meson setup \
+    --prefix=/usr \
+    --libdir=lib${LIBDIRSUFFIX} \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --buildtype=release \
+    -Dtests=false \
+    -Dgtk_doc=false \
+    ..
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --enable-animation \
-  --enable-animationrtl \
-  --build=$ARCH-slackware-linux
-
-make
-make install DESTDIR=$PKG
-
-# Don't package .la files:
-rm -f $PKG/usr/lib${LIBDIRSUFFIX}/gtk-2.0/2.10.0/engines/*.la
+  meson configure
+  ninja
+  DESTDIR=$PKG ninja install
+cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING* ChangeLog INSTALL NEWS README TODO \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING HACKING* NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
