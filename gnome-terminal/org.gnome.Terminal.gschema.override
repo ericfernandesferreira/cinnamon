@@ -3,6 +3,5 @@ theme-variant='dark'
 
 [org.gnome.Terminal.Legacy.Profile]
 use-transparent-background=true
-background-transparency-percent=10
-
-
+background-transparency-percent=15
+unified-menu=false
