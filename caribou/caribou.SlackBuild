@@ -78,7 +78,7 @@ find -L . \
 autoreconf -vif
 intltoolize
 
-PYTHON=/usr/bin/python3 \
+PYTHON="/usr/bin/python3" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
