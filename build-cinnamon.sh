@@ -48,7 +48,7 @@ for dir in \
   setproctitle \
   ptyprocess \
   gnome-desktop \
-  gtksourceview4 \
+  gtksourceview5 \
   exempi \
   dmz-cursor-theme \
   cjs \
@@ -73,6 +73,7 @@ for dir in \
   metacity \
   polib \
   cinnamon-translations \
+  libadwaita \
   file-roller \
   meld \
   diffuse \
@@ -85,12 +86,12 @@ for dir in \
   python3-xapp \
   xdotool \
   cinnamon-screensaver \
-  murrine \
   cinnamon-themes \
+  mint-l-icons \
   mint-y-icons \
   mint-themes \
-  cinnamon \
   gnome-icon-theme \
+  cinnamon \
   gnome-terminal \
   libpeas \
   gspell \
@@ -98,7 +99,10 @@ for dir in \
   appstream-glib \
   uchardet \
   amtk \
-  tepl \
+  libgedit-amtk \
+  libgedit-tepl \
+  libgedit-gtksourceview \
+  libgedit-gfls \
   gedit \
   libgxps \
   evince \
