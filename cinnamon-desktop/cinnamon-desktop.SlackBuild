@@ -83,8 +83,6 @@ cd build
     --sysconfdir=/etc \
     --localstatedir=/var \
     --buildtype=release \
-    -Dalsa=true \
-    -Dpnp_ids=/usr/share/hwdata/pnp.ids \
     ..
 
   meson configure
