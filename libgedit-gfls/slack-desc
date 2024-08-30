@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+             |-----handy-ruler------------------------------------------------------|
+libgedit-gfls: libgedit-gfls is part of Gedit Technology.
+libgedit-gfls:
+libgedit-gfls: It is a module dedicated to file loading and saving for the needs of
+libgedit-gfls: gedit and other similar text editors.
+libgedit-gfls:
+libgedit-gfls:
+libgedit-gfls:
+libgedit-gfls:
+libgedit-gfls:
+libgedit-gfls: Homepage : https://gitlab.gnome.org/World/gedit/libgedit-gfls
+libgedit-gfls:
