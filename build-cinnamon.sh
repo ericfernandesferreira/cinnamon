@@ -63,6 +63,7 @@ for dir in \
   gnome-menus \
   cinnamon-menus \
   cinnamon-control-center \
+  libadwaita \
   zenity \
   cogl \
   clutter \
@@ -73,7 +74,7 @@ for dir in \
   metacity \
   polib \
   cinnamon-translations \
-  libadwaita \
+  libportal \
   file-roller \
   meld \
   diffuse \
@@ -100,9 +101,9 @@ for dir in \
   uchardet \
   amtk \
   libgedit-amtk \
-  libgedit-tepl \
   libgedit-gtksourceview \
   libgedit-gfls \
+  libgedit-tepl \
   gedit \
   libgxps \
   evince \
@@ -110,7 +111,6 @@ for dir in \
   gnome-calculator \
   gnome-screenshot \
   gnome-system-monitor \
-  libportal \
   eog \
   ; do
   # Get the package name
