@@ -23,7 +23,7 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=libgedit-gtksourceview
-VERSION=${VERSION:-299.2.1}
+VERSION=${VERSION:-299.4.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -79,6 +79,7 @@ cd build
     --sysconfdir=/etc \
     --localstatedir=/var \
     --buildtype=release \
+    -Dtests=false \
     -Dgtk_doc=false \
     ..
 

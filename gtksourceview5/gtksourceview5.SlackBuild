@@ -24,7 +24,7 @@
 
 PRGNAM=gtksourceview5
 SRCNAM=gtksourceview
-VERSION=${VERSION:-5.13.1}
+VERSION=${VERSION:-5.14.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -36,7 +36,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://download.gnome.org/sources/gtksourceview/5.13/$SRCNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/gtksourceview/5.14/$SRCNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -81,6 +81,7 @@ cd build
     --localstatedir=/var \
     --mandir=/usr/man \
     --buildtype=release \
+    -Dbuild-testsuite=false \
     ..
 
   meson configure

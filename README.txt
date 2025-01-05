@@ -1,4 +1,4 @@
-Versão do Cinnamon : 6.2.x
+Versão do Cinnamon : 6.4.x
 
 Requerimentos:
 - slackware64 current
@@ -22,7 +22,7 @@ Conteúdo:
 - gnome screenshot
 - gnome system monitor
 - gthumb
-- nemo extensions (fileroller,share,audio-tab,terminal,compare,python)
+- nemo extensions (fileroller,share,audio-tab,terminal,compare,pastebin,python)
 
 Como instalar:
 - você precisa baixar o .zip ou clonar o git e então executar o script
@@ -30,7 +30,7 @@ sh build-cinnamon.sh
 
 ------------------------------------------------------------------------------
 
-Cinnamon Version : 6.2.x
+Cinnamon Version : 6.4.x
 
 Requirements:
 - slackware64 current
@@ -54,7 +54,7 @@ Contents:
 - gnome screenshot
 - gnome system monitor
 - gthumb
-- nemo extensions (fileroller,share,audio-tab,terminal,compare,python)
+- nemo extensions (fileroller,share,audio-tab,terminal,compare,pastebin,python)
 
 How to install:
 - you need to download the .zip or clone git and then run the script

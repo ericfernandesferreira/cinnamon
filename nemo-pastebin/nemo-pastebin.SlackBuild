@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Slackware build script for gspell
+# Slackware build script for nemo-extensions (nemo-pastebin)
 
 # Copyright 2015-2024 Eric Fernandes Ferreira <candelabrus@gmail.com>
 # All rights reserved.
@@ -22,10 +22,11 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-PRGNAM=gspell
-VERSION=${VERSION:-1.13.2}
+PRGNAM=nemo-pastebin
+SRCNAM=nemo-extensions
+VERSION=${VERSION:-6.4.0}
 BUILD=${BUILD:-1}
-TAG=${TAG:-_SBo}
+TAG=${TAG:-_csb}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -35,11 +36,11 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://download.gnome.org/sources/gspell/1.13/$PRGNAM-$VERSION.tar.xz
+wget -c https://github.com/linuxmint/nemo-extensions/archive/$VERSION.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
-PKG=$TMP/package-$PRGNAM
+PKG=$TMP/package-$PRGNAM-$VERSION
 OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
@@ -61,9 +62,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
-cd $PRGNAM-$VERSION
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$VERSION.tar.gz
+cd $SRCNAM-$VERSION/$PRGNAM
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -71,29 +72,14 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  meson setup \
-    --prefix=/usr \
-    --libdir=lib${LIBDIRSUFFIX} \
-    --sysconfdir=/etc \
-    --localstatedir=/var \
-    --buildtype=release \
-    -Dtests=false \
-    -Dgtk_doc=false \
-    -Dinstall_tests=false \
-    ..
-
-  meson configure
-  ninja
-  DESTDIR=$PKG ninja install
-cd ..
+# Python3
+python3 setup.py install --root=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a COPYING NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

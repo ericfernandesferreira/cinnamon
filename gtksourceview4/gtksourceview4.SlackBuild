@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-# Slackware build script for appstream-glib
+# Slackware build script for gtksourceview4
 
-# Copyright 2017 Andrew Clemons, Wellington New Zealand
+# Copyright 2015-2024 Eric Fernandes Ferreira <candelabrus@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,14 +22,11 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
-
-PRGNAM=appstream-glib
-SRCNAM=appstream_glib
-VERSION=${VERSION:-0.8.3}
-SRCVERSION=${SRCVERSION:-0_8_3}
+PRGNAM=gtksourceview4
+SRCNAM=gtksourceview
+VERSION=${VERSION:-4.8.4}
 BUILD=${BUILD:-1}
-TAG=${TAG:-_SBo}
+TAG=${TAG:-_csb}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -39,7 +36,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://github.com/hughsie/appstream-glib/archive/${SRCNAM}_$SRCVERSION.tar.gz
+wget -c https://download.gnome.org/sources/gtksourceview/4.8/$SRCNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -65,9 +62,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-${SRCNAM}_$SRCVERSION
-tar xvf $CWD/${SRCNAM}_$SRCVERSION.tar.gz
-cd $PRGNAM-${SRCNAM}_$SRCVERSION
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -94,12 +91,8 @@ cd ..
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COMMITMENT COPYING MAINTAINERS NEWS README* RELEASE docs/Porting* \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING HACKING NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

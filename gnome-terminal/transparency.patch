@@ -1,4 +1,4 @@
-From 0a9ae93f0d0d2b99ff0e6616efaa621822abff63 Mon Sep 17 00:00:00 2001
+From 705d2164ddf43663831330f9f4afad6954952a09 Mon Sep 17 00:00:00 2001
 From: Debarshi Ray <debarshir@gnome.org>
 Date: Mon, 12 May 2014 14:57:18 +0200
 Subject: [PATCH 1/4] Restore transparency
@@ -155,10 +155,10 @@ index 4e661244..aa109078 100644
  #define TERMINAL_SETTING_CONTEXT_INFO_KEY               "context-info"
  #define TERMINAL_SETTING_DEFAULT_SHOW_MENUBAR_KEY       "default-show-menubar"
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 43450928..97eac67c 100644
+index 7d7cc40e..2813aa15 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
-@@ -1059,7 +1059,9 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
+@@ -1076,7 +1076,9 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
        prop_name == I_(TERMINAL_PROFILE_HIGHLIGHT_COLORS_SET_KEY) ||
        prop_name == I_(TERMINAL_PROFILE_HIGHLIGHT_BACKGROUND_COLOR_KEY) ||
        prop_name == I_(TERMINAL_PROFILE_HIGHLIGHT_FOREGROUND_COLOR_KEY) ||
@@ -169,7 +169,7 @@ index 43450928..97eac67c 100644
      update_color_scheme (screen);
  
    if (!prop_name || prop_name == I_(TERMINAL_PROFILE_AUDIBLE_BELL_KEY))
-@@ -1147,6 +1149,8 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1164,6 +1166,8 @@ update_color_scheme (TerminalScreen *screen)
    GdkRGBA *cursor_bgp = nullptr, *cursor_fgp = nullptr;
    GdkRGBA *highlight_bgp = nullptr, *highlight_fgp = nullptr;
    GtkStyleContext *context;
@@ -178,7 +178,7 @@ index 43450928..97eac67c 100644
    gboolean use_theme_colors;
  
    context = gtk_widget_get_style_context (widget);
-@@ -1190,6 +1194,18 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1207,6 +1211,18 @@ update_color_scheme (TerminalScreen *screen)
      }
  
    colors = terminal_g_settings_get_rgba_palette (priv->profile, TERMINAL_PROFILE_PALETTE_KEY, &n_colors);
@@ -197,7 +197,7 @@ index 43450928..97eac67c 100644
    vte_terminal_set_colors (VTE_TERMINAL (screen), &fg, &bg,
                             colors, n_colors);
    vte_terminal_set_color_bold (VTE_TERMINAL (screen), boldp);
-@@ -1197,6 +1213,10 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1214,6 +1230,10 @@ update_color_scheme (TerminalScreen *screen)
    vte_terminal_set_color_cursor_foreground (VTE_TERMINAL (screen), cursor_fgp);
    vte_terminal_set_color_highlight (VTE_TERMINAL (screen), highlight_bgp);
    vte_terminal_set_color_highlight_foreground (VTE_TERMINAL (screen), highlight_fgp);
@@ -234,10 +234,10 @@ index 36eb7ce7..a41d2de2 100644
    uuid_unparse (u, uuidstr);
    priv->uuid = g_strdup (uuidstr);
 -- 
-2.45.1
+2.47.1
 
 
-From f0b6f9402dbdc9695de6f374deaaa3fc61d3aeb5 Mon Sep 17 00:00:00 2001
+From 7fd3d735dbb9932e020b8e054923c27c96aaa416 Mon Sep 17 00:00:00 2001
 From: Lars Uebernickel <lars.uebernickel@canonical.com>
 Date: Wed, 28 May 2014 14:11:02 +0200
 Subject: [PATCH 2/4] window: Make the drawing robust across all themes
@@ -296,10 +296,10 @@ index a41d2de2..11d93419 100644
    widget_class->screen_changed = terminal_window_screen_changed;
    widget_class->style_updated = terminal_window_style_updated;
 -- 
-2.45.1
+2.47.1
 
 
-From 5a88ebf795d62ec16d993222456385bb35ecd8ba Mon Sep 17 00:00:00 2001
+From 0a02eb23b7ad4ba5129bb59e9dc999f2cbe4027d Mon Sep 17 00:00:00 2001
 From: "Owen W. Taylor" <otaylor@fishsoup.net>
 Date: Fri, 13 Nov 2015 15:16:42 +0100
 Subject: [PATCH 3/4] screen, window: Extra padding around transparent
@@ -312,10 +312,10 @@ https://bugzilla.redhat.com/show_bug.cgi?id=1207943
  2 files changed, 49 insertions(+), 10 deletions(-)
 
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 97eac67c..c264e681 100644
+index 2813aa15..8746fe43 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
-@@ -156,6 +156,8 @@ static void terminal_screen_system_font_changed_cb (GSettings *,
+@@ -159,6 +159,8 @@ static void terminal_screen_system_font_changed_cb (GSettings *,
  static gboolean terminal_screen_popup_menu (GtkWidget *widget);
  static gboolean terminal_screen_button_press (GtkWidget *widget,
                                                GdkEventButton *event);
@@ -324,7 +324,7 @@ index 97eac67c..c264e681 100644
  static void terminal_screen_child_exited  (VteTerminal *terminal,
                                             int status);
  
-@@ -599,6 +601,7 @@ terminal_screen_class_init (TerminalScreenClass *klass)
+@@ -606,6 +608,7 @@ terminal_screen_class_init (TerminalScreenClass *klass)
    widget_class->drag_data_received = terminal_screen_drag_data_received;
    widget_class->button_press_event = terminal_screen_button_press;
    widget_class->popup_menu = terminal_screen_popup_menu;
@@ -332,7 +332,7 @@ index 97eac67c..c264e681 100644
  
    terminal_class->child_exited = terminal_screen_child_exited;
  
-@@ -1134,6 +1137,32 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
+@@ -1151,6 +1154,32 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
    g_object_thaw_notify (object);
  }
  
@@ -365,7 +365,7 @@ index 97eac67c..c264e681 100644
  static void
  update_color_scheme (TerminalScreen *screen)
  {
-@@ -1149,7 +1178,6 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1166,7 +1195,6 @@ update_color_scheme (TerminalScreen *screen)
    GdkRGBA *cursor_bgp = nullptr, *cursor_fgp = nullptr;
    GdkRGBA *highlight_bgp = nullptr, *highlight_fgp = nullptr;
    GtkStyleContext *context;
@@ -373,7 +373,7 @@ index 97eac67c..c264e681 100644
    gboolean transparent;
    gboolean use_theme_colors;
  
-@@ -1214,9 +1242,7 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1231,9 +1259,7 @@ update_color_scheme (TerminalScreen *screen)
    vte_terminal_set_color_highlight (VTE_TERMINAL (screen), highlight_bgp);
    vte_terminal_set_color_highlight_foreground (VTE_TERMINAL (screen), highlight_fgp);
  
@@ -384,7 +384,7 @@ index 97eac67c..c264e681 100644
  }
  
  static void
-@@ -1758,6 +1784,13 @@ terminal_screen_do_popup (TerminalScreen *screen,
+@@ -1775,6 +1801,13 @@ terminal_screen_do_popup (TerminalScreen *screen,
    terminal_screen_popup_info_unref (info);
  }
  
@@ -431,107 +431,107 @@ index 11d93419..61857bfe 100644
  
    return GTK_WIDGET_CLASS (terminal_window_parent_class)->draw (widget, cr);
 -- 
-2.45.1
+2.47.1
 
 
-From da86330372ae2d69d93da6be3943b345be598032 Mon Sep 17 00:00:00 2001
+From e47a2cd648d99fad47fc364e6774c60a24274ccf Mon Sep 17 00:00:00 2001
 From: Debarshi Ray <debarshir@gnome.org>
 Date: Tue, 17 Feb 2015 17:06:17 +0100
 Subject: [PATCH 4/4] Restore translations for setting a title and transparency
 
 ---
- po/am.po          |   8 +-
- po/an.po          |  12 +-
- po/ar.po          |  16 +-
- po/as.po          |  16 +-
- po/ast.po         |   8 +-
- po/az.po          |   8 +-
- po/be.po          |   3 +
- po/be@latin.po    |   8 +-
- po/bg.po          |   9 +
- po/bn.po          |   8 +-
- po/bn_IN.po       |  11 +-
- po/br.po          |   6 +-
- po/bs.po          |  10 +
- po/ca.po          |  12 +
- po/ca@valencia.po |  12 +
- po/cs.po          |  12 +-
- po/cy.po          |   8 +-
- po/da.po          |  12 +
- po/de.po          |  12 +
- po/dz.po          |   8 +-
- po/el.po          |  15 +-
- po/en@shaw.po     |   8 +-
- po/en_CA.po       |   8 +-
- po/en_GB.po       |  16 +-
- po/eo.po          |   8 +-
- po/es.po          |  16 +-
- po/et.po          |   3 +
- po/eu.po          |  12 +
- po/fa.po          |  18 +-
- po/fi.po          |  12 +
- po/fr.po          |  24 ++
- po/fur.po         |  11 +-
- po/ga.po          |   3 +
- po/gl.po          |  15 +-
- po/gu.po          |  16 +-
- po/he.po          |  16 +-
- po/hi.po          |  17 +-
- po/hr.po          |  10 +
- po/hu.po          |  12 +
- po/hy.po          |   8 +-
- po/id.po          |  12 +
- po/it.po          |  12 +
- po/ja.po          |  12 +
- po/ka.po          |   5 +
- po/kk.po          |  12 +
- po/km.po          |   4 +-
- po/kn.po          |  15 +-
- po/ko.po          |  12 +
- po/ku.po          |   8 +-
- po/lt.po          |  12 +
- po/lv.po          |  16 ++
- po/mai.po         |   8 +-
- po/mg.po          |   8 +-
- po/mk.po          |   8 +-
- po/ml.po          |   3 +
- po/mn.po          |   8 +-
- po/mr.po          |  16 +-
- po/ms.po          |   4 +-
- po/nb.po          |  12 +
- po/nds.po         |   8 +-
- po/ne.po          |  11 +-
- po/nl.po          |  12 +
- po/nn.po          |   8 +-
- po/oc.po          |  12 +-
- po/or.po          |   4 +-
- po/pa.po          |  23 +-
- po/ps.po          |   8 +-
- po/pt.po          |  16 +-
- po/pt_BR.po       |  12 +
- po/ro.po          |   4 +-
- po/ru.po          |  16 ++
- po/rw.po          |   3 +-
- po/si.po          |   8 +-
- po/sk.po          |  12 +
- po/sl.po          | 559 +---------------------------------------------
- po/sq.po          |   8 +-
- po/sr.po          |  22 +-
- po/sr@latin.po    |  22 +-
- po/sv.po          |  12 +
- po/ta.po          |  27 ++-
- po/te.po          |  27 ++-
- po/tg.po          |  16 +-
- po/th.po          |  20 +-
- po/tr.po          |  12 +
- po/ug.po          |   4 +-
- po/uk.po          |  15 ++
- po/vi.po          |  15 +-
- po/xh.po          |  12 +-
- po/zh_CN.po       |  15 +-
- po/zh_HK.po       |  15 +-
- po/zh_TW.po       |  15 +-
- 92 files changed, 734 insertions(+), 885 deletions(-)
+ po/am.po          |  8 ++++----
+ po/an.po          | 12 ++++++------
+ po/ar.po          | 16 ++++++++--------
+ po/as.po          | 16 ++++++++--------
+ po/ast.po         |  8 ++++----
+ po/az.po          |  8 ++++----
+ po/be.po          |  3 +++
+ po/be@latin.po    |  8 ++++----
+ po/bg.po          |  9 +++++++++
+ po/bn.po          |  8 ++++----
+ po/bn_IN.po       | 11 +++++++----
+ po/br.po          |  6 +++---
+ po/bs.po          | 10 ++++++++++
+ po/ca.po          | 12 ++++++++++++
+ po/ca@valencia.po | 12 ++++++++++++
+ po/cs.po          | 12 ++++++++++--
+ po/cy.po          |  8 ++++----
+ po/da.po          | 12 ++++++++++++
+ po/de.po          | 12 ++++++++++++
+ po/dz.po          |  8 ++++----
+ po/el.po          | 15 +++++++++------
+ po/en@shaw.po     |  8 ++++----
+ po/en_CA.po       |  8 ++++----
+ po/en_GB.po       | 16 ++++++++--------
+ po/eo.po          |  8 ++++----
+ po/es.po          | 16 ++++++++--------
+ po/et.po          |  3 +++
+ po/eu.po          | 12 ++++++++++++
+ po/fa.po          | 18 ++++++++++++------
+ po/fi.po          | 12 ++++++++++++
+ po/fr.po          | 24 ++++++++++++++++++++++++
+ po/fur.po         | 11 +++++++++--
+ po/ga.po          |  3 +++
+ po/gl.po          | 15 +++++++++------
+ po/gu.po          | 16 ++++++++--------
+ po/he.po          | 16 ++++++++--------
+ po/hi.po          | 17 ++++++++---------
+ po/hr.po          | 10 ++++++++++
+ po/hu.po          | 12 ++++++++++++
+ po/hy.po          |  8 ++++----
+ po/id.po          | 12 ++++++++++++
+ po/it.po          | 12 ++++++++++++
+ po/ja.po          | 12 ++++++++++++
+ po/ka.po          |  5 +++++
+ po/kk.po          | 12 ++++++++++++
+ po/km.po          |  4 ++--
+ po/kn.po          | 15 +++++++++------
+ po/ko.po          | 12 ++++++++++++
+ po/ku.po          |  8 ++++----
+ po/lt.po          | 12 ++++++++++++
+ po/lv.po          | 16 ++++++++++++++++
+ po/mai.po         |  8 ++++----
+ po/mg.po          |  8 ++++----
+ po/mk.po          |  8 ++++----
+ po/ml.po          |  3 +++
+ po/mn.po          |  8 ++++----
+ po/mr.po          | 16 ++++++++--------
+ po/ms.po          |  4 ++--
+ po/nb.po          | 12 ++++++++++++
+ po/nds.po         |  8 ++++----
+ po/ne.po          | 11 +++++++----
+ po/nl.po          | 12 ++++++++++++
+ po/nn.po          |  8 ++++----
+ po/oc.po          | 12 ++++++------
+ po/or.po          |  4 ++--
+ po/pa.po          | 23 +++++++++++------------
+ po/ps.po          |  8 ++++----
+ po/pt.po          | 16 ++++++++--------
+ po/pt_BR.po       | 12 ++++++++++++
+ po/ro.po          |  4 ++--
+ po/ru.po          | 16 ++++++++++++++++
+ po/rw.po          |  3 +--
+ po/si.po          |  8 ++++----
+ po/sk.po          | 12 ++++++++++++
+ po/sl.po          | 12 ++++++++++++
+ po/sq.po          |  8 ++++----
+ po/sr.po          | 22 ++++++++++++----------
+ po/sr@latin.po    | 22 ++++++++++++----------
+ po/sv.po          | 12 ++++++++++++
+ po/ta.po          | 27 +++++++++++++--------------
+ po/te.po          | 27 +++++++++++++--------------
+ po/tg.po          | 16 ++++++++--------
+ po/th.po          | 20 ++++++++++----------
+ po/tr.po          | 12 ++++++++++++
+ po/ug.po          |  4 ++--
+ po/uk.po          | 15 +++++++++++++++
+ po/vi.po          | 15 +++++++++------
+ po/xh.po          | 12 ++++++------
+ po/zh_CN.po       | 15 +++++++++------
+ po/zh_HK.po       | 15 +++++++++------
+ po/zh_TW.po       | 15 +++++++++------
+ 92 files changed, 738 insertions(+), 334 deletions(-)
 
 diff --git a/po/am.po b/po/am.po
 index 3445d96d..ee992f07 100644
@@ -733,13 +733,13 @@ index 586c1e4d..4bd84679 100644
  #: ../src/gnome-terminal.glade2.h:103
  msgid "_Update login records when command is launched"
 diff --git a/po/be.po b/po/be.po
-index 298ec2d6..50f46093 100644
+index 75b26123..1a1620a1 100644
 --- a/po/be.po
 +++ b/po/be.po
-@@ -2635,3 +2635,6 @@ msgstr "_Закрыць акно"
- 
- #~ msgid "Current Locale"
- #~ msgstr "Дзейная лакальнасць"
+@@ -2533,3 +2533,6 @@ msgstr "_Закрыць акно"
+ #, c-format
+ msgid "Failed to parse arguments: %s\n"
+ msgstr "Не ўдалося разабраць аргументы: %s\n"
 +
 +msgid "Transparent background"
 +msgstr "Празрысты фон"
@@ -888,13 +888,13 @@ index e18510c4..17724733 100644
 +msgid "Set Title"
 +msgstr "Postavi naslov"
 diff --git a/po/ca.po b/po/ca.po
-index 82859f65..6d0b484e 100644
+index b59dea1f..e2db3c00 100644
 --- a/po/ca.po
 +++ b/po/ca.po
-@@ -2512,3 +2512,15 @@ msgstr "Tanca la _finestra"
- #, c-format
- msgid "Failed to parse arguments: %s\n"
- msgstr "Ha fallat l'anàlisi dels arguments: %s\n"
+@@ -2584,3 +2584,15 @@ msgstr "Ha fallat l'anàlisi dels arguments: %s\n"
+ #~ msgctxt "theme variant"
+ #~ msgid "Dark"
+ #~ msgstr "Fosc"
 +
 +msgid "Transparent background"
 +msgstr "Fons transparent"
@@ -928,10 +928,10 @@ index a6e8fb42..c9ed8508 100644
 +msgid "Set Title"
 +msgstr "Estableix el títol"
 diff --git a/po/cs.po b/po/cs.po
-index 8f3d7dcc..65f5da9c 100644
+index 9cf70a75..3cec4465 100644
 --- a/po/cs.po
 +++ b/po/cs.po
-@@ -2484,6 +2484,14 @@ msgstr "Selhala analýza argumentů: %s\n"
+@@ -2555,6 +2555,14 @@ msgstr "Selhala analýza argumentů: %s\n"
  
  #~ msgid "Armenian"
  #~ msgstr "Arménské"
@@ -1202,10 +1202,10 @@ index 0e83b981..0d98ea57 100644
  #~ msgid "On the left side"
  #~ msgstr "Maldekstre"
 diff --git a/po/es.po b/po/es.po
-index d59135a1..9fa46d54 100644
+index abd74ce8..2ecf80db 100644
 --- a/po/es.po
 +++ b/po/es.po
-@@ -2945,17 +2945,17 @@ msgstr "Falló al analizar los argumentos: %s\n"
+@@ -2982,17 +2982,17 @@ msgstr "Falló al analizar los argumentos: %s\n"
  #~ msgid "Default size:"
  #~ msgstr "Tamaño predeterminado:"
  
@@ -1229,7 +1229,7 @@ index d59135a1..9fa46d54 100644
  
  #~ msgid "Current Locale"
  #~ msgstr "Configuración regional actual"
-@@ -3782,8 +3782,8 @@ msgstr "Falló al analizar los argumentos: %s\n"
+@@ -3819,8 +3819,8 @@ msgstr "Falló al analizar los argumentos: %s\n"
  #~ msgid "_Solid color"
  #~ msgstr "Color _sólido"
  
@@ -1490,10 +1490,10 @@ index 76b459cf..485beeac 100644
  #~ msgid "No such profile \"%s\", using default profile\n"
  #~ msgstr "\"%s\" જેવી કોઈ રૂપરેખા નથી, મૂળભૂત રૂપરેખા વાપરી રહ્યા છે\n"
 diff --git a/po/he.po b/po/he.po
-index 0950c6be..5cbaddb9 100644
+index d319eabe..ef1b2681 100644
 --- a/po/he.po
 +++ b/po/he.po
-@@ -2828,17 +2828,17 @@ msgstr "Failed to parse arguments: %s\n"
+@@ -2902,17 +2902,17 @@ msgstr "Failed to parse arguments: %s\n"
  #~ msgid "Default size:"
  #~ msgstr "גודל בררת מחדל:"
  
@@ -1517,7 +1517,7 @@ index 0950c6be..5cbaddb9 100644
  
  #~ msgid "Current Locale"
  #~ msgstr "השפה הנוכחית"
-@@ -3650,8 +3650,8 @@ msgstr "Failed to parse arguments: %s\n"
+@@ -3726,8 +3726,8 @@ msgstr "Failed to parse arguments: %s\n"
  #~ msgid "_Solid color"
  #~ msgstr "צבע _אחיד"
  
@@ -1642,13 +1642,13 @@ index aaf2d9b2..4d466f16 100644
  #: ../src/profile-preferences.glade.h:74
  msgid "_Update login records when command is launched"
 diff --git a/po/id.po b/po/id.po
-index c5deea8b..7de90500 100644
+index ec2bab7f..892c6493 100644
 --- a/po/id.po
 +++ b/po/id.po
-@@ -2509,3 +2509,15 @@ msgstr "Gagal mengurai argumen: \"%s\"\n"
- 
- #~ msgid "_Detach Tab"
- #~ msgstr "_Pisahkan Tab"
+@@ -2542,3 +2542,15 @@ msgstr "Tutup Jende_la"
+ #, c-format
+ msgid "Failed to parse arguments: %s\n"
+ msgstr "Gagal mengurai argumen: \"%s\"\n"
 +
 +msgid "Transparent background"
 +msgstr "Latar belakang transparan"
@@ -2320,10 +2320,10 @@ index b25a2cb4..3855b2f3 100644
  #: ../src/profile-preferences.glade.h:70
  msgid "_Update login records when command is launched"
 diff --git a/po/pt.po b/po/pt.po
-index e2e65775..b9a3981b 100644
+index 0db6f389..5a7de508 100644
 --- a/po/pt.po
 +++ b/po/pt.po
-@@ -2874,11 +2874,11 @@ msgstr "Falha ao processar argumentos: %s\n"
+@@ -2950,11 +2950,11 @@ msgstr "Falha ao processar argumentos: %s\n"
  #~ msgid "Default size:"
  #~ msgstr "Tamanho predefinido:"
  
@@ -2339,7 +2339,7 @@ index e2e65775..b9a3981b 100644
  
  #~ msgid "Title and Command"
  #~ msgstr "Título e comando"
-@@ -2886,8 +2886,8 @@ msgstr "Falha ao processar argumentos: %s\n"
+@@ -2962,8 +2962,8 @@ msgstr "Falha ao processar argumentos: %s\n"
  #~ msgid "_Unlimited"
  #~ msgstr "_Ilimitado"
  
@@ -2350,7 +2350,7 @@ index e2e65775..b9a3981b 100644
  
  #~ msgid "Current Locale"
  #~ msgstr "Configuração Regional Atual"
-@@ -3642,8 +3642,8 @@ msgstr "Falha ao processar argumentos: %s\n"
+@@ -3718,8 +3718,8 @@ msgstr "Falha ao processar argumentos: %s\n"
  #~ msgid "Background image _scrolls"
  #~ msgstr "Imagem de fundo _rola"
  
@@ -2362,13 +2362,13 @@ index e2e65775..b9a3981b 100644
  #~ msgid "S_hade transparent or image background:"
  #~ msgstr "Transparente som_breado ou imagem de fundo:"
 diff --git a/po/pt_BR.po b/po/pt_BR.po
-index 4fac562a..117f63bb 100644
+index 68b4cd90..e6d7ed43 100644
 --- a/po/pt_BR.po
 +++ b/po/pt_BR.po
-@@ -2423,3 +2423,15 @@ msgstr "_Fechar janela"
- #, c-format
- msgid "Failed to parse arguments: %s\n"
- msgstr "Falha ao analisar os argumentos: %s\n"
+@@ -2575,3 +2575,15 @@ msgstr "Falha ao analisar os argumentos: %s\n"
+ #~ msgctxt "theme variant"
+ #~ msgid "Dark"
+ #~ msgstr "Escuro"
 +
 +msgid "Title"
 +msgstr "Título"
@@ -2397,10 +2397,10 @@ index 627aea90..14d04172 100644
  #~ msgid "_Unlimited"
  #~ msgstr "_Neliminat"
 diff --git a/po/ru.po b/po/ru.po
-index 038243fb..143aa084 100644
+index f977d040..3db81cd6 100644
 --- a/po/ru.po
 +++ b/po/ru.po
-@@ -2781,3 +2781,19 @@ msgstr "Не удалось разобрать аргументы: %s\n"
+@@ -2853,3 +2853,19 @@ msgstr "Не удалось разобрать аргументы: %s\n"
  
  #~ msgid "_Add or Remove…"
  #~ msgstr "_Добавить или удалить…"
@@ -2488,573 +2488,23 @@ index e6745075..20d303c8 100644
 +msgid "Set Title"
 +msgstr "Nastaviť titulok"
 diff --git a/po/sl.po b/po/sl.po
-index eeb90d91..e49a4879 100644
+index 2c328cd5..fd918111 100644
 --- a/po/sl.po
 +++ b/po/sl.po
-@@ -2462,557 +2462,14 @@ msgstr "_Zapri okno"
+@@ -2520,3 +2520,15 @@ msgstr "_Zapri okno"
+ #, c-format
  msgid "Failed to parse arguments: %s\n"
  msgstr "Napaka med razčlenjevanjem argumentov: %s\n"
- 
--#~ msgid "org.gnome.Terminal"
--#~ msgstr "org.gnome.Terminal"
++
 +msgid "Title"
 +msgstr "Naslov"
- 
--#~ msgid "Armenian"
--#~ msgstr "Armenski"
++ 
 +msgid "_Title:"
 +msgstr "_Naziv:"
- 
--#~ msgid "Georgian"
--#~ msgstr "Gruzijski"
++ 
 +msgid "Set Title"
 +msgstr "Določitev naziva okna"
- 
--#~ msgid "Whether to allow bold text"
--#~ msgstr "Ali naj se dovoli krepko besedilo"
--
--#~ msgid "If true, allow applications in the terminal to make text boldface."
--#~ msgstr ""
--#~ "Izbrana možnost omogoča, da programi izpišejo krepko oblikovano besedilo"
--
--#~ msgid "Hindi"
--#~ msgstr "Hindujski"
--
--#~ msgid "Persian"
--#~ msgstr "Perzijski"
--
--#~ msgid "Gujarati"
--#~ msgstr "Gujaratski"
--
--#~ msgid "Gurmukhi"
--#~ msgstr "Gurmukijski"
--
--#~ msgid "Icelandic"
--#~ msgstr "Islandski"
--
--#~ msgid "Set _Character Encoding"
--#~ msgstr "Določi nabor _znakov"
--
--#~ msgid "Move Tab _Left"
--#~ msgstr "Premakni zavihek _levo"
--
--#~ msgid "Move Tab _Right"
--#~ msgstr "Premakni zavihek _desno"
--
--#~ msgid "_Detach Tab"
--#~ msgstr "_Odpni zavihek"
--
--#~ msgid "Whether to show menubar in new windows/tabs"
--#~ msgstr "Ali naj bo v novih oknih ali zavihkih vidna menijska vrstica"
--
--#~ msgid "True if the menubar should be shown in new window"
--#~ msgstr ""
--#~ "Izbrana možnost določa, da bo v novih oknih prikazana menijska vrstica"
--
--#~ msgid "_Quit"
--#~ msgstr "_Končaj"
--
--#~ msgid "Unnamed"
--#~ msgstr "Neimenovan"
--
--#~ msgid "Open in _Midnight Commander"
--#~ msgstr "Odpri s programom _Midnight Commander"
--
--#~ msgid ""
--#~ "Open the currently selected folder in the terminal file manager Midnight "
--#~ "Commander"
--#~ msgstr ""
--#~ "Odpri trenutno izbrano mapo v terminalu s programom Midnight Commander"
--
--#~ msgid ""
--#~ "Open the currently open folder in the terminal file manager Midnight "
--#~ "Commander"
--#~ msgstr ""
--#~ "Odpri trenutno odprto mapo v terminalu s programom Midnight Commander"
--
--#~ msgid "Open _Midnight Commander"
--#~ msgstr "Odpri program _Midnight Commander"
--
--#~ msgid "Open the terminal file manager Midnight Commander"
--#~ msgstr "V terminalu odpri program Midnight Commander"
--
--#~ msgid "Verbose output"
--#~ msgstr "Podroben izpis"
--
--#~ msgid "Output options:"
--#~ msgstr "Možnosti izpisa:"
--
--#~ msgid "Show output options"
--#~ msgstr "Prikaže možnosti odvoda"
--
--#~ msgid "“%s” is not a valid application ID"
--#~ msgstr "»%s« ni veljaven ID programa"
--
--#~ msgid "Server application ID"
--#~ msgstr "ID programa strežnika"
--
--#~ msgid "ID"
--#~ msgstr "ID"
--
--#~ msgid "Show completions"
--#~ msgstr "Pokaži dopolnjevanje"
--
--#~ msgid "Global options:"
--#~ msgstr "Splošne možnosti:"
--
--#~ msgid "Show global options"
--#~ msgstr "Pokaže splošne možnosti"
--
--#~ msgid "FD passing of stdin is not supported"
--#~ msgstr "Sklic FD na standardni vhod ni podprt"
--
--#~ msgid "FD passing of stdout is not supported"
--#~ msgstr "Sklic FD na standardni izhod ni podprt"
--
--#~ msgid "FD passing of stderr is not supported"
--#~ msgstr "Sklic FD na standardno napako ni podprt"
--
--#~ msgid "Invalid argument “%s” to --fd option"
--#~ msgstr "Neveljaven argument »%s« za možnost --fd"
--
--#~ msgid "Forward stdin"
--#~ msgstr "Posreduj standardni vhod"
--
--#~ msgid "Forward stdout"
--#~ msgstr "Posreduj standardni izhod"
--
--#~ msgid "Forward stderr"
--#~ msgstr "Posreduj standardno napako"
--
--#~ msgid "Exec options:"
--#~ msgstr "Možnosti izvajanja:"
--
--#~ msgid "Show exec options"
--#~ msgstr "Prikaže možnosti izvajanja"
--
--#~ msgid "Maximise the window"
--#~ msgstr "Razpni okno"
--
--#~ msgid "Window options:"
--#~ msgstr "Možnosti okna:"
--
--#~ msgid "Show window options"
--#~ msgstr "Pokaži možnosti okna"
--
--#~ msgid "Zoom value “%s” is outside allowed range"
--#~ msgstr "Vrednost približanja »%s« je izven veljavnega območja"
--
--#~ msgid "UUID"
--#~ msgstr "UUID"
--
--#~ msgid "Terminal options:"
--#~ msgstr "Možnosti terminala:"
--
--#~ msgid "Processing options:"
--#~ msgstr "Možnosti opravil:"
--
--#~ msgid "Show processing options"
--#~ msgstr "Prikaže možnosti opravil"
--
--#~ msgid "Missing argument"
--#~ msgstr "Manjka argument"
--
--#~ msgid "Unknown command “%s”"
--#~ msgstr "Neznan ukaz »%s«"
--
--#~ msgid "“%s” needs the command to run as arguments after “--”"
--#~ msgstr "»%s« zahteva ukaz za zagon ukaza kot argument za '--'"
--
--#~ msgid "Extraneous arguments after “--”"
--#~ msgstr "Dodatni argument za » -- «"
--
--#~ msgid "GTerminal"
--#~ msgstr "GTerminal"
--
--#~ msgid "Error processing arguments: %s\n"
--#~ msgstr "Napaka med obdelavo argumentov: %s\n"
--
--#~ msgid "Keyboard shortcut to create a new profile"
--#~ msgstr "Tipkovna bližnjica za ustvarjanje novega profila"
--
--#~ msgid "Keyboard shortcut to open the current profile’s Preferences dialog"
--#~ msgstr "Tipkovna bližnjica za odpiranje pogovornega okna lastnosti profila"
--
--#~ msgid "List of available encodings"
--#~ msgstr "Seznam razpoložljivih znakovnih naborov"
--
--#~ msgid ""
--#~ "A subset of possible encodings are presented in the Encoding submenu. "
--#~ "This is a list of encodings to appear there."
--#~ msgstr ""
--#~ "Podrejeni izbor razpoložljivih naborov znakov je prikazan v podmeniju "
--#~ "kodiranja. Seznam je prikazan spodaj."
--
--#~ msgid "_Profile used when launching a new terminal:"
--#~ msgstr "Profil, ki naj se _uporabi ob zagonu novega terminala:"
--
--#~ msgid "E_ncodings shown in menu:"
--#~ msgstr "Nabori _prikazani v meniju:"
--
--#~ msgid "Profile Editor"
--#~ msgstr "Urejevalnik profilov"
--
--#~ msgid "_Profile name:"
--#~ msgstr "Ime _profila:"
--
--#~ msgid "_Rewrap on resize"
--#~ msgstr "_Samodejno prelomi"
--
--#~ msgid ""
--#~ "<b>Note:</b> Terminal applications have these colors available to them."
--#~ msgstr "<b>Opomba:</b> programi terminala imajo na voljo te barve."
--
--#~ msgid ""
--#~ "<b>Note:</b> These options may cause some applications to behave "
--#~ "incorrectly.  They are only here to allow you to work around certain "
--#~ "applications and operating systems that expect different terminal "
--#~ "behavior."
--#~ msgstr ""
--#~ "<b>Opomba:</b> Te možnosti lahko vplivajo na nepravilno delovanje "
--#~ "nekaterih programov. Tu so le zato, da lahko delate z določenimi programi "
--#~ "in operacijskimi sistemi, ki pričakujejo drugačno delovanje terminala."
--
--#~ msgid "New Terminal in New Tab"
--#~ msgstr "Nov terminal v novem zavihku"
--
--#~ msgid "New Terminal in New Window"
--#~ msgstr "Nov terminal v novem oknu"
--
--#~ msgid "Close All Terminals"
--#~ msgstr "Zapri vsa okna terminala"
--
--#~ msgid "Clear Find Highlight"
--#~ msgstr "Počisti poudarjanje iskanja"
--
--#~ msgid "Detach Terminal"
--#~ msgstr "Odpni terminal"
--
--#~ msgid "User Defined"
--#~ msgstr "Prikrojeno"
--
--#~ msgid "Click button to choose profile"
--#~ msgstr "Kliknite gumb za izbiro profila"
--
--#~ msgid "Profile list"
--#~ msgstr "Seznam profilov"
--
--#~ msgid "Show"
--#~ msgstr "Pokaži"
--
--#~ msgid "_Encoding"
--#~ msgstr "_Nabor znakov"
--
--#~ msgid "_Profile Preferences"
--#~ msgstr "_Možnosti profila"
--
--#~ msgid "Switch to this tab"
--#~ msgstr "Preklopi na ta zavihek"
--
--#~ msgid "_%u. %s"
--#~ msgstr "_%u. %s"
--
--#~ msgid "_%c. %s"
--#~ msgstr "_%c. %s"
--
--#~ msgid "Open _Terminal"
--#~ msgstr "Odpri _terminal"
--
--#~ msgid "Open Ta_b"
--#~ msgstr "Odpri za_vihek"
--
--#~ msgid "New _Profile"
--#~ msgstr "Nov _profil"
--
--#~ msgid "_Close All Terminals"
--#~ msgstr "_Zapri vsa okna terminala"
--
--#~ msgid "Pre_ferences"
--#~ msgstr "_Možnosti"
--
--#~ msgid "Find Ne_xt"
--#~ msgstr "Najdi _naslednje"
--
--#~ msgid "Find Pre_vious"
--#~ msgstr "Najdi _predhodne"
--
--#~ msgid "Go to _Line…"
--#~ msgstr "Skoči v _vrstico ..."
--
--#~ msgid "_Incremental Search…"
--#~ msgstr "_Postopno iskanje ..."
--
--#~ msgid "_Add or Remove…"
--#~ msgstr "_Dodaj ali odstrani ..."
--
--#~ msgid "_Next Terminal"
--#~ msgstr "_Naslednji terminal"
--
--#~ msgid ""
--#~ "Default color of bold text in the terminal, as a color specification (can "
--#~ "be HTML-style hex digits, or a color name such as \"red\"). This is "
--#~ "ignored if bold_color_same_as_fg is true."
--#~ msgstr ""
--#~ "Privzeta barva krepkega besedila terminala. Določena je lahko kot HTML, "
--#~ "šestnajstiško ali pa z imenom (\"red\" za rdečo). Možnost je prezrta "
--#~ "kadar barva krepkega besedila enaka običajnemu besedilu."
--
--#~ msgid "_Custom font"
--#~ msgstr "Pisava po _meri"
--
--#~ msgid "_Text color:"
--#~ msgstr "Barva _besedila:"
--
--#~ msgid "_Background color:"
--#~ msgstr "Barva _ozadja:"
--
--#~ msgid "_Same as text color"
--#~ msgstr "Enako barvi _besedila"
--
--#~ msgid "Bol_d color:"
--#~ msgstr "Barva krepkega besedila:"
--
--#~ msgid "Search _backwards"
--#~ msgstr "Poišči _nazaj"
--
--#~ msgid ""
--#~ "Possible values are \"close\" to close the terminal, and \"restart\" to "
--#~ "restart the command."
--#~ msgstr ""
--#~ "Mogoče vrednosti so \"close\" (zapri) za zapiranje terminala in "
--#~ "\"restart\" (ponovni zagon) za vnovičen zagon ukaza."
--
--#~ msgid "shell;prompt;command;commandline;"
--#~ msgstr "lupina;ukaz;ukazna vrstica;terminal;"
--
--#~ msgid ""
--#~ "If true, the system login records utmp and wtmp will be updated when the "
--#~ "command inside the terminal is launched."
--#~ msgstr ""
--#~ "Izbrana možnost omogoča, da bosta prijavna zapisa utmp in wtmp "
--#~ "posodobljena, ko se bo zagnal ukaz znotraj terminala."
--
--#~ msgid "_Update login records when command is launched"
--#~ msgstr "Posodobi prijavne zapise, ko je _ukaz zagnan"
--
--#~ msgid "Unknown completion request for \"%s\""
--#~ msgstr "Neznana zahteva za dokončanje \"%s\""
--
--#~ msgid "Missing command"
--#~ msgstr "Manjka ukaz"
--
--#~ msgid "Whether to use a dark theme variant"
--#~ msgstr "Ali naj se uporabi temna tema okna"
--
--#~ msgid "Use _dark theme variant"
--#~ msgstr "Uporabi _temno temo"
--
--#~ msgid "Set the terminal title"
--#~ msgstr "Nastavi naziv terminala"
--
--#~ msgid "_Use the system fixed width font"
--#~ msgstr "_Uporabi sistemsko pisavo določene širine"
--
--#~ msgid "_Font:"
--#~ msgstr "_Pisava:"
--
--#~ msgid "_Unlimited"
--#~ msgstr "_Neomejeno"
--
--#~ msgid ""
--#~ "Commands:\n"
--#~ "  help    Shows this information\n"
--#~ "  run     Create a new terminal running the specified command\n"
--#~ "  shell   Create a new terminal running the user shell\n"
--#~ "\n"
--#~ "Use \"%s COMMAND --help\" to get help on each command.\n"
--#~ msgstr ""
--#~ "Ukazi:\n"
--#~ "  help    Pokaže podrobnosti pomoči\n"
--#~ "  run     Ustvari nov terminalno okno z izvedenim določenim ukazom\n"
--#~ "  shell   Ustvari nov terminalno okno z uporabniško lupino\n"
--#~ "\n"
--#~ "Uporaba \"%s UKAZ --help\" za več podrobnosti o ukazu.\n"
--
--#~ msgid "Be quiet"
--#~ msgstr "Brez sporočanja"
--
--#~ msgid "GNOME Terminal Client"
--#~ msgstr "Terminalski odjemalec GNOME"
--
--#~ msgid "Show server options"
--#~ msgstr "Pokaže možnosti strežnika"
--
--#~ msgctxt "title"
--#~ msgid "'Terminal'"
--#~ msgstr "'Terminal'"
--
--#~ msgid "Title for terminal"
--#~ msgstr "Naziv terminala"
--
--#~ msgid ""
--#~ "Title to display for the terminal window or tab. This title may be "
--#~ "replaced by or combined with the title set by the application inside the "
--#~ "terminal, depending on the title_mode setting."
--#~ msgstr ""
--#~ "Naziv, ki naj bo prikazan v zavihku ali oknu terminala. Naziv lahko "
--#~ "spremeni program zagnan znotraj terminala, to pa določa ključ title_mode."
--
--#~ msgid "Characters that are considered \"part of a word\""
--#~ msgstr "Znaki, ki pripadajo besedam"
--
--#~ msgid ""
--#~ "When selecting text by word, sequences of these characters are considered "
--#~ "single words. Ranges can be given as \"A-Z\". Literal hyphen (not "
--#~ "expressing a range) should be the first character given."
--#~ msgstr ""
--#~ "Kadar se izbira besedilo po besedi, se nize teh znakov obravnava kot dele "
--#~ "besede. Lahko so podani intervali v obliki \"A-Z\". Pomišljaj, ki ne "
--#~ "predstavlja intervala, mora biti prvi podani znak."
--
--#~ msgid "Whether to use custom terminal size for new windows"
--#~ msgstr "Ali naj se za nova okna uporabi privzeta velikost terminalnega okna"
--
--#~ msgid ""
--#~ "If true, newly created terminal windows will have custom size specified "
--#~ "by default_size_columns and default_size_rows."
--#~ msgstr ""
--#~ "Izbrana možnost omogoča, da bo pri novo ustvarjenem terminalu privzeto "
--#~ "uporabljena velikost po meri s podatki privzete velikosti stolpcev in "
--#~ "vrstic."
--
--#~ msgid "Default size:"
--#~ msgstr "Privzeta velikost:"
--
--#~ msgid "Title"
--#~ msgstr "Naslov"
--
--#~ msgid "_Title:"
--#~ msgstr "_Naziv:"
--
--#~ msgid "Title and Command"
--#~ msgstr "Naziv in ukaz"
--
--#~ msgid "Set Title"
--#~ msgstr "Določitev naziva okna"
--
--#~ msgid "Current Locale"
--#~ msgstr "Trenutne jezikovne nastavitve"
--
--#~ msgid "Visible only when necessary"
--#~ msgstr "Vidno po potrebi"
--
--#~ msgid "Hidden"
--#~ msgstr "Skrito"
--
--#~ msgid "_About Terminal"
--#~ msgstr "_O programu"
--
--#~ msgid "What to do with dynamic title"
--#~ msgstr "Kaj narediti z dinamičnim nazivom"
--
--#~ msgid ""
--#~ "If the application in the terminal sets the title (most typically people "
--#~ "have their shell set up to do this), the dynamically-set title can erase "
--#~ "the configured title, go before it, go after it, or replace it. The "
--#~ "possible values are \"replace\", \"before\", \"after\", and \"ignore\"."
--#~ msgstr ""
--#~ "V primeru, da program nastavi naziv terminala (to je običajna nastavitev) "
--#~ "lahko dinamično izbran naziv izbriše prej določeno nastavitev naziva, je "
--#~ "postavljen pred njim, za njim, ali pa ga zamenja. Možne vrednosti so "
--#~ "\"replace\" (zamenjaj), \"before\" (pred), \"after\" (za) in "
--#~ "\"ignore\" (prezri)."
--
--#~ msgid "When terminal commands set their o_wn titles:"
--#~ msgstr "Ko terminalski ukazi določajo lastne naslove:"
--
--#~ msgid "The shortcut key “%s” is already bound to the “%s” action"
--#~ msgstr "Tipkovna bližnjica  “%s” je že povezana z dejanjem “%s”"
--
--#~ msgid "_Input Methods"
--#~ msgstr "_Načini vnosa"
--
--#~ msgid "Keyboard shortcut to switch to tab 1"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 1"
--
--#~ msgid "Keyboard shortcut to switch to tab 2"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 2"
--
--#~ msgid "Keyboard shortcut to switch to tab 3"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 3"
--
--#~ msgid "Keyboard shortcut to switch to tab 4"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 4"
--
--#~ msgid "Keyboard shortcut to switch to tab 5"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 5"
--
--#~ msgid "Keyboard shortcut to switch to tab 6"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 6"
--
--#~ msgid "Keyboard shortcut to switch to tab 7"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 7"
--
--#~ msgid "Keyboard shortcut to switch to tab 8"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 8"
--
--#~ msgid "Keyboard shortcut to switch to tab 9"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 9"
--
--#~ msgid "Keyboard shortcut to switch to tab 10"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 10"
--
--#~ msgid "Keyboard shortcut to switch to tab 11"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 11"
--
--#~ msgid "Keyboard shortcut to switch to tab 12"
--#~ msgstr "Tipkovna bližnjica za preklop na zavihek 12"
--
--#~ msgid "Switch to Tab 3"
--#~ msgstr "Preklopi na zavihek 3"
--
--#~ msgid "Switch to Tab 4"
--#~ msgstr "Preklopi na zavihek 4"
--
--#~ msgid "Switch to Tab 5"
--#~ msgstr "Preklopi na zavihek 5"
--
--#~ msgid "Switch to Tab 6"
--#~ msgstr "Preklopi na zavihek 6"
--
--#~ msgid "Switch to Tab 7"
--#~ msgstr "Preklopi na zavihek 7"
--
--#~ msgid "Switch to Tab 8"
--#~ msgstr "Preklopi na zavihek 8"
--
--#~ msgid "Switch to Tab 9"
--#~ msgstr "Preklopi na zavihek 9"
--
--#~ msgid "Switch to Tab 10"
--#~ msgstr "Preklopi na zavihek 10"
--
--#~ msgid "Switch to Tab 11"
--#~ msgstr "Preklopi na zavihek 11"
--
--#~ msgid "Switch to Tab 12"
--#~ msgstr "Preklopi na zavihek 12"
--
--#~ msgid "Keybindings"
--#~ msgstr "Tipkovne bližnjice"
--
--#~ msgid "Foreground, Background, Bold and Underline"
--#~ msgstr "Pisava, ozadje, krepko in podčrtano besedilo"
--
--#~ msgid "New _Profile…"
--#~ msgstr "Nov _profil ..."
--
--#~ msgid "_Profile Preferences…"
--#~ msgstr "Možnosti _profila ..."
++
 +msgid "Transparent background"
 +msgstr "Prosojno ozadje"
 diff --git a/po/sq.po b/po/sq.po
@@ -3188,10 +2638,10 @@ index 45dbad07..852c47cc 100644
 +msgid "Transparent background"
 +msgstr "Providna pozadina"
 diff --git a/po/sv.po b/po/sv.po
-index 1e4e6054..72450042 100644
+index 0d129cfc..ee846826 100644
 --- a/po/sv.po
 +++ b/po/sv.po
-@@ -2839,5 +2839,17 @@ msgstr "Misslyckades med att tolka argument: %s\n"
+@@ -2885,5 +2885,17 @@ msgstr "Misslyckades med att tolka argument: %s\n"
  #~ msgid "Unknown completion request for \"%s\""
  #~ msgstr "Okänd kompletteringsbegäran för \"%s\""
  
@@ -3459,10 +2909,10 @@ index 313f76b9..be608976 100644
  #~ msgid ""
  #~ "You already have a profile called “%s”. Do you want to create another "
 diff --git a/po/uk.po b/po/uk.po
-index 6484716b..de2b483d 100644
+index f9b251e3..f1832aa9 100644
 --- a/po/uk.po
 +++ b/po/uk.po
-@@ -2491,3 +2491,18 @@ msgstr "Не вдається визначити аргументи: %s\n"
+@@ -2573,3 +2573,18 @@ msgstr "Не вдається визначити аргументи: %s\n"
  
  #~ msgid "Georgian"
  #~ msgstr "Грузинське"
@@ -3525,6 +2975,40 @@ index 5304429b..af014ff2 100644
 +
 +msgid "Transparent background"
 +msgstr "Nền trong suốt"
+
+@@ -224,8 +224,8 @@ msgid "<b>Background</b>"
+ msgstr "<b>Fond</b>"
+ 
+ #: ../src/gnome-terminal.glade2.h:3
+-msgid "<b>Command</b>"
+-msgstr "<b>Comande</b>"
++msgid "Command"
++msgstr "Comande"
+ 
+ #: ../src/gnome-terminal.glade2.h:4
+ msgid "<b>Compatibility</b>"
+@@ -564,8 +564,8 @@ msgid "_Text color:"
+ msgstr "Coleur pol _tecse:"
+ 
+ #: ../src/gnome-terminal.glade2.h:86
+-msgid "_Transparent background"
+-msgstr "Fond k' on voet _houte"
++msgid "Transparent background"
++msgstr "Fond k' on voet houte"
+ 
+ #: ../src/gnome-terminal.glade2.h:87
+ msgid "_Update login records when command is launched"
+@@ -2227,8 +2227,8 @@ msgid "Change _Profile"
+ msgstr "Candjî _profil"
+ 
+ #: ../src/terminal-window.c:1013
+-msgid "_Set Title..."
+-msgstr "_Candjî l' tite..."
++msgid "_Set Title…"
++msgstr "_Candjî l' tite…"
+ 
+ #: ../src/terminal-window.c:1020
+ msgid "Set _Character Encoding"
 diff --git a/po/xh.po b/po/xh.po
 index cb78ec67..a4f3b4dd 100644
 --- a/po/xh.po
@@ -3563,10 +3047,10 @@ index cb78ec67..a4f3b4dd 100644
  #: ../src/terminal-window.c:986
  msgid "Set _Character Encoding"
 diff --git a/po/zh_CN.po b/po/zh_CN.po
-index f68c7ce5..a3be00e1 100644
+index 9ec7923f..3a80cd5e 100644
 --- a/po/zh_CN.po
 +++ b/po/zh_CN.po
-@@ -2805,17 +2805,17 @@ msgstr "无法处理参数：%s\n"
+@@ -2877,17 +2877,17 @@ msgstr "无法处理参数：%s\n"
  #~ msgid "Default size:"
  #~ msgstr "默认大小："
  
@@ -3590,7 +3074,7 @@ index f68c7ce5..a3be00e1 100644
  
  #~ msgid "Current Locale"
  #~ msgstr "当前区域"
-@@ -2928,3 +2928,6 @@ msgstr "无法处理参数：%s\n"
+@@ -3000,3 +3000,6 @@ msgstr "无法处理参数：%s\n"
  
  #~ msgid "_Find..."
  #~ msgstr "查找(_F)..."
@@ -3668,6 +3152,6 @@ index d692f648..4bdaac8a 100644
 +msgid "Transparent background"
 +msgstr "透明背景"
 -- 
-2.45.1
+2.47.1
 
 

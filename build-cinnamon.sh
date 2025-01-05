@@ -38,6 +38,8 @@ TMP=${TMP:-/tmp}
 # This is the original directory where you started this script
 CSBROOT=$(pwd)
 
+#  nemo-share \ problem to compile
+
 # Loop for all packages
 for dir in \
   pytz \
@@ -48,9 +50,11 @@ for dir in \
   setproctitle \
   ptyprocess \
   gnome-desktop \
+  gtksourceview4 \  
   gtksourceview5 \
   exempi \
   dmz-cursor-theme \
+  mozjs115 \
   cjs \
   python-pam \
   cinnamon-desktop \
@@ -80,8 +84,8 @@ for dir in \
   diffuse \
   nemo \
   nemo-python \
+  nemo-pastebin \
   nemo-fileroller \
-  nemo-share \
   nemo-image-converter \
   nemo-compare \
   python3-xapp \
@@ -95,9 +99,7 @@ for dir in \
   cinnamon \
   gnome-terminal \
   libpeas \
-  gspell \
   gcab \
-  appstream-glib \
   uchardet \
   amtk \
   libgedit-amtk \
