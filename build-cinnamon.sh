@@ -38,8 +38,6 @@ TMP=${TMP:-/tmp}
 # This is the original directory where you started this script
 CSBROOT=$(pwd)
 
-#  nemo-share \ problem to compile
-
 # Loop for all packages
 for dir in \
   pytz \
@@ -111,6 +109,7 @@ for dir in \
   gthumb \
   gnome-calculator \
   gnome-screenshot \
+  catch2 \
   gnome-system-monitor \
   eog \
   ; do
