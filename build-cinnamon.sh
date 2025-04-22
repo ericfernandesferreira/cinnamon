@@ -50,7 +50,6 @@ for dir in \
   setproctitle \
   ptyprocess \
   gnome-desktop \
-  gtksourceview4 \  
   gtksourceview5 \
   exempi \
   dmz-cursor-theme \
