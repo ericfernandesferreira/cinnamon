@@ -22,7 +22,7 @@ Conteúdo:
 - gnome screenshot
 - gnome system monitor
 - gthumb
-- nemo extensions (fileroller,share,audio-tab,terminal,compare,pastebin,python)
+- nemo extensions (fileroller,audio-tab,terminal,compare,pastebin,python)
 
 Como instalar:
 - você precisa baixar o .zip ou clonar o git e então executar o script
@@ -54,7 +54,7 @@ Contents:
 - gnome screenshot
 - gnome system monitor
 - gthumb
-- nemo extensions (fileroller,share,audio-tab,terminal,compare,pastebin,python)
+- nemo extensions (fileroller,audio-tab,terminal,compare,pastebin,python)
 
 How to install:
 - you need to download the .zip or clone git and then run the script
