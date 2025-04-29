@@ -77,6 +77,7 @@ for dir in \
   cinnamon-translations \
   libportal \
   file-roller \
+  gnome-disk-utility \
   meld \
   diffuse \
   nemo \
