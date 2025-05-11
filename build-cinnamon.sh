@@ -64,6 +64,8 @@ for dir in \
   gnome-menus \
   cinnamon-menus \
   cinnamon-control-center \
+  libstemmer \
+  appstream \
   libadwaita \
   zenity \
   cogl \
@@ -75,6 +77,7 @@ for dir in \
   metacity \
   polib \
   cinnamon-translations \
+  libxmlb \
   libportal \
   file-roller \
   gnome-disk-utility \
