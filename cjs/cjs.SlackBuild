@@ -25,7 +25,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=cjs
-VERSION=${VERSION:-6.4.0}
+VERSION=${VERSION:-128.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -75,6 +75,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+patch -p1 < $CWD/131.patch
+
 mkdir -p build
 cd build
   meson setup \
@@ -86,6 +88,7 @@ cd build
     --buildtype=release \
     -Dskip_gtk_tests=true \
     -Dskip_dbus_tests=true \
+    -Dinstalled_tests=false \
     ..
 
   meson configure
