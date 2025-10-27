@@ -65,7 +65,6 @@ for dir in \
   cinnamon-menus \
   cinnamon-control-center \
   libstemmer \
-  appstream \
   libadwaita \
   zenity \
   cogl \
