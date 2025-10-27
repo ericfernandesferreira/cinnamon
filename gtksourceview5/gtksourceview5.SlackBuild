@@ -24,7 +24,7 @@
 
 PRGNAM=gtksourceview5
 SRCNAM=gtksourceview
-VERSION=${VERSION:-5.16.0}
+VERSION=${VERSION:-5.18.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -36,7 +36,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://download.gnome.org/sources/gtksourceview/5.16/$SRCNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/gtksourceview/5.18/$SRCNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -93,7 +93,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING HACKING NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS CONTRIBUTING* COPYING NEWS README* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

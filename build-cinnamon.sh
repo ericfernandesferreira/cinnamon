@@ -51,7 +51,7 @@ for dir in \
   gtksourceview5 \
   exempi \
   dmz-cursor-theme \
-  mozjs115 \
+  mozjs128 \
   cjs \
   python-pam \
   cinnamon-desktop \

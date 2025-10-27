@@ -77,8 +77,8 @@ find -L . \
 #  --enable-wayland-egl-server \
 #  --enable-wayland-egl-platform \
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
+CFLAGS="$SLKCFLAGS -std=gnu17" \
+CXXFLAGS="$SLKCFLAGS -std=gnu17" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
