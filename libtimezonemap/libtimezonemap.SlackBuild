@@ -37,7 +37,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libtimezonemap/0.4.6-7/${PRGNAM}_${VERSION}.orig.tar.gz
+wget -c https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libtimezonemap/0.4.6-7build1/${PRGNAM}_${VERSION}.orig.tar.gz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}

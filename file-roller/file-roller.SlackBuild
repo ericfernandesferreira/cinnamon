@@ -83,6 +83,7 @@ cd build
     --sysconfdir=/etc \
     --localstatedir=/var \
     --buildtype=release \
+    -Dpackagekit=false \
     -Dintrospection=enabled \
     ..
 

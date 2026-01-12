@@ -41,8 +41,10 @@ CSBROOT=$(pwd)
 # Loop for all packages
 for dir in \
   pytz \
+  xapp-symbolic-icons \
   gnome-common \
   libtimezonemap \
+  python3-pyinotify \
   python3-libsass \
   tinycss2 \
   setproctitle \

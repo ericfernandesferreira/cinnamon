@@ -1,4 +1,4 @@
-Versão do Cinnamon : 6.4.x
+Versão do Cinnamon : 6.6.x
 
 Requerimentos:
 - slackware64 current
@@ -30,7 +30,7 @@ sh build-cinnamon.sh
 
 ------------------------------------------------------------------------------
 
-Cinnamon Version : 6.4.x
+Cinnamon Version : 6.6.x
 
 Requirements:
 - slackware64 current

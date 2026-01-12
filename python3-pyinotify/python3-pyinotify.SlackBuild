@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Slackware build script for nemo-extensions (nemo-image-converter)
+# Slackware build script for python3-pyinotify
 
-# Copyright 2015-2025 Eric Fernandes Ferreira <candelabrus@gmail.com>
+# Copyright 2012-2015 Larry Hajali <larryhaja[at]gmail[dot]com>
+# Copyright 2024 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -21,12 +22,18 @@
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# Modified for CSB Project
 
-PRGNAM=nemo-image-converter
-SRCNAM=nemo-extensions
-VERSION=${VERSION:-6.6.0}
+# Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
+
+PRGNAM=python3-pyinotify
+SRCNAM=pyinotify
+VERSION=${VERSION:-0.9.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
+
+wget -c https://files.pythonhosted.org/packages/e3/c0/fd5b18dde17c1249658521f69598f3252f11d9d7a980c5be8619970646e1/$SRCNAM-$VERSION.tar.gz
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -36,11 +43,9 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://github.com/linuxmint/nemo-extensions/archive/$VERSION.tar.gz
-
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
-PKG=$TMP/package-$PRGNAM-$VERSION
+PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
@@ -63,8 +68,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$VERSION.tar.gz
-cd $SRCNAM-$VERSION/$PRGNAM
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -72,26 +77,21 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  meson setup \
-    --prefix=/usr \
-    --libdir=lib${LIBDIRSUFFIX} \
-    --sysconfdir=/etc \
-    --localstatedir=/var \
-    --buildtype=release \
-    ..
+# Compile the C extension.
+sed -i '/^compile_ext_mod/s|=.*|= True|' setup.py
 
-  meson configure
-  ninja
-  DESTDIR=$PKG ninja install
-cd ..
+# Make asyncore support optional for Python 3.12+
+# Thanks to Arch Linux
+patch -p1 < $CWD/pyinotify-python-3.12-fix.patch
+
+# Python3
+python3 setup.py install --root=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING ChangeLog NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a ACKS COPYING README* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
