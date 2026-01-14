@@ -49,6 +49,7 @@ for dir in \
   tinycss2 \
   setproctitle \
   ptyprocess \
+  bolt \
   gnome-desktop \
   gtksourceview5 \
   exempi \
@@ -59,6 +60,7 @@ for dir in \
   cinnamon-desktop \
   libgnomekbd \
   libcroco \
+  gucharmap \
   xapp \
   cinnamon-session \
   gsound \
