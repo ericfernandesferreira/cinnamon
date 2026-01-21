@@ -118,6 +118,7 @@ for dir in \
   gnome-screenshot \
   catch2 \
   gnome-system-monitor \
+  gnome-power-manager \
   eog \
   ; do
   # Get the package name
