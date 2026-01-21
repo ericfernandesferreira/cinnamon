@@ -1,0 +1,11 @@
+diff -ruN gnome-power-manager-43.0/man/meson.build gnome-power-manager-43.0-patched/man/meson.build
+--- gnome-power-manager-43.0/man/meson.build	2022-09-16 10:41:24.000000000 -0300
++++ gnome-power-manager-43.0-patched/man/meson.build	2026-01-20 11:29:09.295940104 -0300
+@@ -5,6 +5,6 @@
+     input : 'gnome-power-statistics.sgml',
+     command : [docbook2man, '@INPUT@', '--output', 'man'],
+     install : true,
+-    install_dir : 'share/man/man1'
++    install_dir : 'man/man1'
+   )
+ endif
