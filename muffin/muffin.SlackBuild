@@ -84,6 +84,9 @@ cd build
     --localstatedir=/var \
     --mandir=/usr/man \
     --buildtype=release \
+    -Dcogl_tests=false \
+    -Dcore_tests=false \
+    -Dclutter_tests=false \
     ..
 
   meson configure
