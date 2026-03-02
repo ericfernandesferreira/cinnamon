@@ -80,8 +80,6 @@ for dir in \
   metacity \
   polib \
   cinnamon-translations \
-  libxmlb \
-  libportal \
   file-roller \
   gnome-disk-utility \
   meld \
