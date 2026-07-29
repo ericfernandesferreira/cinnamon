@@ -23,7 +23,7 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=gnome-power-manager
-VERSION=${VERSION:-43.0}
+VERSION=${VERSION:-50.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -35,7 +35,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://download.gnome.org/sources/gnome-power-manager/43/$PRGNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/gnome-power-manager/50/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -97,7 +97,7 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COMMITMENT COPYING MAINTAINERS README* RELEASE \
+cp -a AUTHORS COMMITMENT COPYING MAINTAINERS README* RELEASE* \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

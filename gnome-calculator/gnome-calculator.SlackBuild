@@ -23,7 +23,7 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=gnome-calculator
-VERSION=${VERSION:-48.1}
+VERSION=${VERSION:-50.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -35,7 +35,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://download.gnome.org/sources/gnome-calculator/48/$PRGNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/gnome-calculator/50/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -71,6 +71,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+export PYTHONPATH="$PWD/subprojects/blueprint-compiler:$PYTHONPATH"
+
 mkdir -p build
 cd build
   meson setup \
@@ -80,6 +82,7 @@ cd build
     --localstatedir=/var \
     --mandir=/usr/man \
     --buildtype=release \
+    -Ddoc=false \
     ..
 
   meson configure

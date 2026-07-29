@@ -24,7 +24,7 @@
 # Modified again by Eric Fernandes Ferreira <candelabrus@gmail.com> for my personal Cinnamon Project
 
 PRGNAM=libpeas
-VERSION=${VERSION:-1.36.0}
+VERSION=${VERSION:-1.38.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_csb}
 
@@ -36,7 +36,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-wget -c https://download.gnome.org/sources/libpeas/1.36/$PRGNAM-$VERSION.tar.xz
+wget -c https://download.gnome.org/sources/libpeas/1.38/$PRGNAM-$VERSION.tar.xz
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/csb}
@@ -81,7 +81,8 @@ cd build
     --localstatedir=/var \
     --buildtype=release \
     -Dvapi=true \
-    -Dlua51=false \
+    -Dlua51=true \
+    -Ddemos=false \
     ..
 
   meson configure

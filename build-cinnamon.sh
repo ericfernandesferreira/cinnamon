@@ -54,7 +54,6 @@ for dir in \
   gtksourceview5 \
   exempi \
   dmz-cursor-theme \
-  mozjs128 \
   cjs \
   python-pam \
   cinnamon-desktop \
@@ -105,8 +104,8 @@ for dir in \
   uchardet \
   amtk \
   libgedit-amtk \
-  libgedit-gtksourceview \
   libgedit-gfls \
+  libgedit-gtksourceview \
   libgedit-tepl \
   gedit \
   libgxps \
